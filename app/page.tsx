@@ -1,6 +1,6 @@
-import Image from "next/image";
-
+import { ExperienceYears } from "@/components/experience-years";
 import { HeroParallax } from "@/components/hero-parallax";
+import { WorksGallery } from "@/components/works-gallery";
 
 const capabilities = [
   {
@@ -50,70 +50,70 @@ const environments = [
 const projects = [
   {
     title: "Great People Branemark Center",
-    meta: "shanghai, china // dental center // 2019",
+    meta: "Shanghai, China // Dental Center // 2019",
     image: "/images/projects/great-people-shanghai-02.png",
     alt: "Great People Shanghai dental center interior",
     className: "project-card project-card-large",
   },
   {
     title: "St. George Medical Center",
-    meta: "hong kong // specialist clinic // 2019",
+    meta: "Hong Kong // Specialist Clinic // 2019",
     image: "/images/projects/st-george-01.png",
     alt: "Minimal medical reception and corridor with black structural details",
     className: "project-card project-card-tall",
   },
   {
     title: "Conch Hospital",
-    meta: "anhui, china // dental department // 2019",
+    meta: "Anhui, China // Dental Department // 2019",
     image: "/images/projects/conch-hospital.png",
     alt: "Conch Hospital dental department interior",
     className: "project-card project-card-square",
   },
   {
     title: "Clinic A K11 TST",
-    meta: "hong kong // dental clinic // 2019",
+    meta: "Hong Kong // Dental Clinic // 2019",
     image: "/images/projects/clinic-a.png",
     alt: "Clinic A at K11 dental clinic interior",
     className: "project-card project-card-wide",
   },
   {
     title: "Clinic A Dental Section",
-    meta: "hong kong // clinical interior // 2019",
+    meta: "Hong Kong // Clinical Interior // 2019",
     image: "/images/projects/clinic-a-03.png",
     alt: "Clinic A dental section detail",
     className: "project-card project-card-small",
   },
   {
     title: "Langham Place Orthodontics",
-    meta: "kowloon // orthodontics centre // 2019",
+    meta: "Kowloon, Hong Kong // Orthodontics Centre // 2019",
     image: "/images/projects/langham-place.png",
     alt: "Langham Place orthodontics centre",
     className: "project-card project-card-tall",
   },
   {
     title: "Varios Dental Clinic",
-    meta: "hong kong // dental clinic",
+    meta: "Hong Kong // Dental Clinic",
     image: "/images/projects/varios-dental.png",
     alt: "Varios Dental Clinic interior",
     className: "project-card project-card-small",
   },
   {
     title: "VSH Wanchai MRI",
-    meta: "hong kong // veterinary hospital // mri suite",
+    meta: "Hong Kong // Veterinary Hospital // MRI Suite",
     image: "/images/projects/vsh-mri.png",
     alt: "VSH Wanchai MRI suite interior",
     className: "project-card project-card-tall",
   },
   {
     title: "Monnis Restaurant",
-    meta: "mongolia, china // hospitality // 2016",
+    meta: "Mongolia // Hospitality // 2016",
     image: "/images/projects/monnis-restaurant.png",
     alt: "Monnis Restaurant interior",
     className: "project-card project-card-tall",
   },
   {
     title: "Private Residence",
-    meta: "residential // interior design",
+    meta: "Residential // Interior Design",
     image: "/images/projects/residential.png",
     alt: "Private residence interior",
     className: "project-card project-card-small",
@@ -185,13 +185,13 @@ export default function Home() {
           hallwicks
         </a>
         <nav className="nav-links" aria-label="Section links">
-          <a href="#story">story</a>
-          <a href="#capabilities">capabilities</a>
-          <a href="#works">works</a>
-          <a href="#contact">contact</a>
+          <a href="#story">Story</a>
+          <a href="#capabilities">Capabilities</a>
+          <a href="#works">Works</a>
+          <a href="#contact">Contact</a>
         </nav>
         <a className="nav-inquiry" href="mailto:hallwicks@gmail.com">
-          <span>inquiry</span>
+          <span>Inquiry</span>
           <span aria-hidden="true">+</span>
         </a>
       </header>
@@ -212,7 +212,7 @@ export default function Home() {
               <p>
                 Hallwicks Design Limited has spent nearly four decades developing
                 focused design capability for medical and dental clinics across
-                Hong Kong, Singapore, and China.
+                Hong Kong, China, and Singapore.
               </p>
               <p>
                 The studio works closely with clients to translate clinical
@@ -227,11 +227,11 @@ export default function Home() {
               </div>
               <div>
                 <span className="technical-label">experience</span>
-                <strong>38 yrs</strong>
+                <ExperienceYears />
               </div>
               <div>
                 <span className="technical-label">regions</span>
-                <strong>hk.sg.china</strong>
+                <strong>HK.China.SG</strong>
               </div>
             </aside>
           </div>
@@ -294,25 +294,7 @@ export default function Home() {
               <span aria-hidden="true">+</span>
             </a>
           </div>
-          <div className="project-grid">
-            {projects.map((project) => (
-              <article className={project.className} key={project.title}>
-                <div className="project-image-wrap">
-                  <Image
-                    src={project.image}
-                    alt={project.alt}
-                    fill
-                    sizes="(max-width: 980px) 100vw, 66vw"
-                  />
-                  <span className="project-index technical-label">hdl</span>
-                </div>
-                <div className="project-meta">
-                  <h3>{project.title}</h3>
-                  <p className="technical-label">{project.meta}</p>
-                </div>
-              </article>
-            ))}
-          </div>
+          <WorksGallery projects={projects} />
         </section>
 
         <section className="contact-section" id="contact" aria-labelledby="contact-title">

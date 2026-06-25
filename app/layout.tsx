@@ -4,7 +4,7 @@ import "./globals.css";
 export const metadata: Metadata = {
   title: "Hallwicks Design Limited | Clinical Interior Architecture",
   description:
-    "Hallwicks Design Limited creates precise medical, dental, and veterinary interiors across Hong Kong, Singapore, and China.",
+    "Hallwicks Design Limited creates precise medical, dental, and veterinary interiors across Hong Kong, China, and Singapore.",
   icons: {
     icon: "/favicon.svg",
     shortcut: "/favicon.svg",

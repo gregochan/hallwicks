@@ -44,6 +44,11 @@ h3 {
   text-wrap: pretty;
 }
 
+h1,
+h2 {
+  text-wrap: balance;
+}
+
 p,
 li {
   orphans: 2;
@@ -70,6 +75,8 @@ a {
 img {
   display: block;
   max-width: 100%;
+  user-select: none;
+  -webkit-user-drag: none;
 }
 
 section {
@@ -138,7 +145,7 @@ textarea {
 }
 
 .nav-brand {
-  opacity: var(--nav-brand-opacity, 1);
+  opacity: var(--nav-brand-opacity, 0);
 }
 
 .nav-links {
@@ -148,7 +155,7 @@ textarea {
   font-size: 12px;
   font-weight: 700;
   letter-spacing: 0.18em;
-  text-transform: lowercase;
+  text-transform: none;
 }
 
 .nav-links a,
@@ -176,6 +183,9 @@ textarea {
   gap: 8px;
   font-family: var(--mono);
   font-size: 12px;
+}
+
+.text-trigger {
   text-transform: lowercase;
 }
 
@@ -293,16 +303,28 @@ textarea {
   background: var(--paper-dim);
 }
 
+.protected-image {
+  user-select: none;
+  -webkit-touch-callout: none;
+}
+
+.protected-image::after {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  content: "";
+}
+
 .hero-float-card img {
   object-fit: cover;
-  filter: grayscale(1) contrast(1.04);
+  filter: contrast(1.02) saturate(1.05);
   transition:
     filter 300ms ease,
     transform 420ms ease;
 }
 
 .hero-float-card:hover img {
-  filter: grayscale(0) contrast(1);
+  filter: contrast(1) saturate(1.08);
   transform: scale(1.035);
 }
 
@@ -321,26 +343,25 @@ textarea {
 
 .hero-statement {
   position: absolute;
+  top: clamp(278px, 23vw, 332px);
   right: var(--page);
-  bottom: clamp(28px, 4vw, 56px);
+  bottom: auto;
+  left: clamp(370px, 40vw, 560px);
   z-index: 5;
   display: grid;
   gap: clamp(10px, 1.2vw, 18px);
   justify-items: start;
-  width: min(52vw, 720px);
+  width: auto;
+  max-width: 760px;
 }
 
 .hero-kicker {
-  position: absolute;
-  top: -72px;
-  left: 0;
+  position: static;
   color: var(--meta);
 }
 
 .hero-rotator {
-  position: absolute;
-  top: -44px;
-  left: 0;
+  position: static;
   display: inline-flex;
   min-height: 18px;
   align-items: center;
@@ -675,6 +696,12 @@ textarea {
   background: var(--paper-dim);
 }
 
+.project-image-motion {
+  position: absolute;
+  inset: -8%;
+  z-index: 0;
+}
+
 .project-card-large .project-image-wrap {
   aspect-ratio: 2 / 1;
 }
@@ -714,10 +741,12 @@ textarea {
   position: absolute;
   top: 14px;
   right: 14px;
+  z-index: 2;
   padding: 8px 10px;
   border: 1px solid var(--ink);
   background: var(--green);
   color: var(--ink);
+  text-transform: uppercase;
 }
 
 .project-meta {
@@ -732,6 +761,7 @@ textarea {
   max-width: 180px;
   color: var(--meta);
   text-align: right;
+  text-transform: none;
 }
 
 .contact-section {
@@ -912,10 +942,13 @@ textarea {
 
   .hero-statement {
     position: relative;
+    top: auto;
     right: auto;
     bottom: auto;
+    left: auto;
     min-height: 88svh;
     width: 100%;
+    max-width: none;
     padding: 340px var(--page) 54px;
   }
 

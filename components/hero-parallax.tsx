@@ -95,11 +95,17 @@ export function HeroParallax() {
             depth={image.depth}
             key={image.src}
           >
-            <figure className="hero-float-card">
+            <figure
+              className="hero-float-card protected-image"
+              onContextMenu={(event) => event.preventDefault()}
+            >
               <Image
                 src={image.src}
                 alt={image.alt}
+                draggable={false}
                 fill
+                onContextMenu={(event) => event.preventDefault()}
+                onDragStart={(event) => event.preventDefault()}
                 priority={image.priority}
                 sizes={image.sizes}
               />
@@ -116,7 +122,7 @@ export function HeroParallax() {
 
       <div className="hero-statement">
         <p className="technical-label hero-kicker">
-          est. 1987 // hk + sg + china
+          est. 1987 // hk + china + sg
         </p>
         <p className="technical-label hero-rotator">
           specialized environments //
@@ -131,12 +137,12 @@ export function HeroParallax() {
         </p>
         <h1 id="hero-title">
           <span>the intersection</span>
-          <span>of care,</span>
-          <span>precision, and space.</span>
+          <span>of care, precision,</span>
+          <span>and space.</span>
         </h1>
         <p className="hero-copy">
           Hallwicks creates medical, dental, and specialist care interiors
-          across Hong Kong, Singapore, and China. Since 1987, the studio has
+          across Hong Kong, China, and Singapore. Since 1987, the studio has
           turned clinical workflow into calm, precise space.
         </p>
       </div>
