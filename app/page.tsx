@@ -1,5 +1,7 @@
 import Image from "next/image";
 
+import { HeroParallax } from "@/components/hero-parallax";
+
 const capabilities = [
   {
     number: "01",
@@ -83,29 +85,7 @@ export default function Home() {
       </header>
 
       <main id="top">
-        <section className="hero" aria-labelledby="hero-title">
-          <Image
-            className="hero-image"
-            src="/images/hero-clinical-intersection.png"
-            alt="Minimal clinical interior with glass treatment room and black structural intersections"
-            fill
-            priority
-            sizes="100vw"
-          />
-          <div className="hero-overlay" aria-hidden="true" />
-          <div className="hero-grid">
-            <p className="technical-label hero-kicker">est. 1987 // hk + sg + prc</p>
-            <h1 id="hero-title">
-              <span>Hallwicks</span>
-              <span>Architectural</span>
-              <span>Precision</span>
-            </h1>
-            <p className="hero-copy">
-              Medical, dental, and veterinary interiors shaped with 38 years of
-              clinical design authority.
-            </p>
-          </div>
-        </section>
+        <HeroParallax />
 
         <section className="story-section section-grid" id="story" aria-labelledby="story-title">
           <div className="section-marker">
