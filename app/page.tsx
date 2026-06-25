@@ -1,7 +1,9 @@
 import { ExperienceYears } from "@/components/experience-years";
 import { ClientLogoGrid } from "@/components/client-logo-grid";
 import { HeroParallax } from "@/components/hero-parallax";
+import { MobileScrollTop } from "@/components/mobile-scroll-top";
 import { RevealSection } from "@/components/reveal-section";
+import { SiteHeader } from "@/components/site-header";
 import { WorksGallery } from "@/components/works-gallery";
 
 const capabilities = [
@@ -241,21 +243,7 @@ function EnvironmentIcon({ name }: { name: string }) {
 export default function Home() {
   return (
     <>
-      <header className="top-nav" aria-label="Primary navigation">
-        <a className="nav-brand" href="#top" aria-label="Hallwicks home">
-          hallwicks
-        </a>
-        <nav className="nav-links" aria-label="Section links">
-          <a href="#story">Story</a>
-          <a href="#capabilities">Capabilities</a>
-          <a href="#works">Works</a>
-          <a href="#contact">Contact</a>
-        </nav>
-        <a className="nav-inquiry" href="mailto:hallwicks@gmail.com">
-          <span>Inquiry</span>
-          <span aria-hidden="true">+</span>
-        </a>
-      </header>
+      <SiteHeader />
 
       <main id="top">
         <HeroParallax />
@@ -428,6 +416,7 @@ export default function Home() {
           <a href="mailto:hallwicks@gmail.com">email</a>
         </div>
       </footer>
+      <MobileScrollTop />
     </>
   );
 }

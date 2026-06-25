@@ -13,8 +13,8 @@ export function ClientLogoGrid({ clients }: { clients: string[] }) {
           initial={reduceMotion ? false : { opacity: 0, y: 22 }}
           key={client}
           transition={{
-            delay: index * 0.06,
-            duration: 0.56,
+            delay: index * 0.12,
+            duration: 0.9,
             ease: [0.16, 1, 0.3, 1],
           }}
           viewport={{ amount: 0.4, once: true }}
