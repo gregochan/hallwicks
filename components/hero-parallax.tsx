@@ -66,11 +66,16 @@ export function HeroParallax() {
       const x = target.left - origin.left;
       const y = target.top - origin.top;
       const scale = 1 + (targetScale - 1) * eased;
-      const fade = progress > 0.82 ? Math.max(0, 1 - (progress - 0.82) / 0.18) : 1;
+      const depth = Math.sin(progress * Math.PI) * 150;
+      const tilt = Math.sin(progress * Math.PI) * -7;
+      const fade = progress > 0.94 ? Math.max(0, 1 - (progress - 0.94) / 0.06) : 1;
+      const brandFade = Math.max(0, Math.min(1, (progress - 0.92) / 0.08));
+      const shadow = Math.sin(progress * Math.PI) * 0.2;
 
-      wordmark.style.transform = `translate3d(${x * eased}px, ${y * eased}px, 0) scale(${scale})`;
+      wordmark.style.transform = `perspective(900px) translate3d(${x * eased}px, ${y * eased}px, ${depth}px) rotateX(${tilt}deg) scale(${scale})`;
       wordmark.style.opacity = String(fade);
-      root.style.setProperty("--nav-brand-opacity", String(progress));
+      wordmark.style.filter = `drop-shadow(0 ${Math.round(22 * shadow)}px ${Math.round(38 * shadow)}px rgba(0, 0, 0, ${shadow}))`;
+      root.style.setProperty("--nav-brand-opacity", String(brandFade));
     };
 
     measure();
@@ -82,6 +87,7 @@ export function HeroParallax() {
       window.removeEventListener("resize", measure);
       wordmark.style.transform = "";
       wordmark.style.opacity = "";
+      wordmark.style.filter = "";
       root.style.removeProperty("--nav-brand-opacity");
     };
   }, []);

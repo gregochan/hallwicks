@@ -42,9 +42,21 @@ const capabilities = [
 ];
 
 const environments = [
-  ["medical centers", "specialist reception, consultation, imaging, and treatment suites"],
-  ["dental clinics", "operatories, sterilization flows, laboratory support, and patient-facing touchpoints"],
-  ["veterinary hospitals", "durable healthcare interiors for treatment, waiting, prep, and recovery zones"],
+  {
+    icon: "medical",
+    title: "medical centers",
+    copy: "specialist reception, consultation, imaging, and treatment suites",
+  },
+  {
+    icon: "dental",
+    title: "dental clinics",
+    copy: "operatories, sterilization flows, laboratory support, and patient-facing touchpoints",
+  },
+  {
+    icon: "veterinary",
+    title: "veterinary hospitals",
+    copy: "durable healthcare interiors for treatment, waiting, prep, and recovery zones",
+  },
 ];
 
 const projects = [
@@ -177,6 +189,42 @@ function ServiceIcon({ name }: { name: string }) {
   );
 }
 
+function EnvironmentIcon({ name }: { name: string }) {
+  const common = {
+    fill: "none",
+    stroke: "currentColor",
+    strokeLinecap: "square" as const,
+    strokeLinejoin: "miter" as const,
+    strokeWidth: 2,
+  };
+
+  return (
+    <svg className="environment-icon" viewBox="0 0 48 48" aria-hidden="true">
+      {name === "medical" && (
+        <>
+          <path d="M8 12h32v28H8z" {...common} />
+          <path d="M24 18v16M16 26h16M14 8h20" {...common} />
+        </>
+      )}
+      {name === "dental" && (
+        <>
+          <path d="M16 8c-5 3-6 11-3 17l5 13 4-10h4l4 10 5-13c3-6 2-14-3-17-3-2-6-1-8 1-2-2-5-3-8-1z" {...common} />
+          <path d="M18 17h12" {...common} />
+        </>
+      )}
+      {name === "veterinary" && (
+        <>
+          <circle cx="15" cy="16" r="4" {...common} />
+          <circle cx="25" cy="12" r="4" {...common} />
+          <circle cx="34" cy="18" r="4" {...common} />
+          <circle cx="20" cy="28" r="4" {...common} />
+          <path d="M17 39c-3-7 3-13 8-13s11 6 8 13H17z" {...common} />
+        </>
+      )}
+    </svg>
+  );
+}
+
 export default function Home() {
   return (
     <>
@@ -274,10 +322,11 @@ export default function Home() {
             <h2 id="env-title">Specialized environments, exact requirements.</h2>
           </div>
           <div className="environment-list">
-            {environments.map(([title, copy]) => (
-              <article className="environment-item" key={title}>
-                <h3>{title}</h3>
-                <p>{copy}</p>
+            {environments.map((environment) => (
+              <article className="environment-item" key={environment.title}>
+                <EnvironmentIcon name={environment.icon} />
+                <h3>{environment.title}</h3>
+                <p>{environment.copy}</p>
               </article>
             ))}
           </div>
