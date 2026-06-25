@@ -17,6 +17,14 @@
   --section: clamp(104px, 13vw, 192px);
 }
 
+@media (min-width: 1680px) {
+  :root {
+    --page: clamp(96px, calc((100vw - 1600px) / 2), 960px);
+    --gap: 32px;
+    --section: 168px;
+  }
+}
+
 * {
   box-sizing: border-box;
 }
@@ -147,6 +155,8 @@ textarea {
 }
 
 .nav-brand {
+  justify-self: start;
+  width: max-content;
   opacity: var(--nav-brand-opacity, 0);
 }
 

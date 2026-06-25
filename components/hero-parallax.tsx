@@ -55,26 +55,24 @@ export function HeroParallax() {
       wordmark.style.transform = "none";
       origin = wordmark.getBoundingClientRect();
       target = navBrand.getBoundingClientRect();
-      targetScale = Math.max(0.1, Math.min(0.2, target.height / origin.height));
+      targetScale = Math.max(0.095, Math.min(0.18, target.width / origin.width));
       update();
     };
 
     const update = () => {
       const range = Math.max(1, hero.offsetHeight - target.bottom - 18);
       const progress = Math.max(0, Math.min(1, window.scrollY / range));
-      const eased = 1 - Math.pow(1 - progress, 3);
-      const x = target.left - origin.left;
-      const y = target.top - origin.top;
+      const eased = progress < 0.5
+        ? 4 * progress * progress * progress
+        : 1 - Math.pow(-2 * progress + 2, 3) / 2;
       const scale = 1 + (targetScale - 1) * eased;
-      const depth = Math.sin(progress * Math.PI) * 150;
-      const tilt = Math.sin(progress * Math.PI) * -7;
+      const x = target.left + (target.width - origin.width * targetScale) / 2 - origin.left;
+      const y = target.top + (target.height - origin.height * targetScale) / 2 - origin.top;
       const fade = progress > 0.94 ? Math.max(0, 1 - (progress - 0.94) / 0.06) : 1;
       const brandFade = Math.max(0, Math.min(1, (progress - 0.92) / 0.08));
-      const shadow = Math.sin(progress * Math.PI) * 0.2;
 
-      wordmark.style.transform = `perspective(900px) translate3d(${x * eased}px, ${y * eased}px, ${depth}px) rotateX(${tilt}deg) scale(${scale})`;
+      wordmark.style.transform = `translate3d(${x * eased}px, ${y * eased}px, 0) scale(${scale})`;
       wordmark.style.opacity = String(fade);
-      wordmark.style.filter = `drop-shadow(0 ${Math.round(22 * shadow)}px ${Math.round(38 * shadow)}px rgba(0, 0, 0, ${shadow}))`;
       root.style.setProperty("--nav-brand-opacity", String(brandFade));
     };
 
@@ -87,7 +85,6 @@ export function HeroParallax() {
       window.removeEventListener("resize", measure);
       wordmark.style.transform = "";
       wordmark.style.opacity = "";
-      wordmark.style.filter = "";
       root.style.removeProperty("--nav-brand-opacity");
     };
   }, []);
