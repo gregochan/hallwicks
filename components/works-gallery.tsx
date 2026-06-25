@@ -71,7 +71,6 @@ function ProjectCard({
             sizes="(max-width: 980px) 100vw, 66vw"
           />
         </motion.div>
-        <span className="project-index technical-label">HDL</span>
       </div>
       <div className="project-meta">
         <h3>{project.title}</h3>

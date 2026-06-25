@@ -1,5 +1,7 @@
 import { ExperienceYears } from "@/components/experience-years";
+import { ClientLogoGrid } from "@/components/client-logo-grid";
 import { HeroParallax } from "@/components/hero-parallax";
+import { RevealSection } from "@/components/reveal-section";
 import { WorksGallery } from "@/components/works-gallery";
 
 const capabilities = [
@@ -258,7 +260,7 @@ export default function Home() {
       <main id="top">
         <HeroParallax />
 
-        <section className="story-section section-stack" id="story" aria-labelledby="story-title">
+        <RevealSection className="story-section section-stack" id="story" aria-labelledby="story-title">
           <div className="section-heading-block">
             <p className="technical-label">01 // our story</p>
             <div aria-hidden="true" />
@@ -306,9 +308,9 @@ export default function Home() {
               </div>
             </aside>
           </div>
-        </section>
+        </RevealSection>
 
-        <section
+        <RevealSection
           className="capabilities-section"
           id="capabilities"
           aria-labelledby="capabilities-title"
@@ -336,9 +338,9 @@ export default function Home() {
               </article>
             ))}
           </div>
-        </section>
+        </RevealSection>
 
-        <section className="environments-section section-stack" aria-labelledby="env-title">
+        <RevealSection className="environments-section section-stack" aria-labelledby="env-title">
           <div className="section-heading-block">
             <p className="technical-label">03 // environments</p>
             <div aria-hidden="true" />
@@ -353,38 +355,28 @@ export default function Home() {
               </article>
             ))}
           </div>
-        </section>
+        </RevealSection>
 
-        <section className="client-section section-stack" aria-labelledby="client-title">
+        <RevealSection className="client-section section-stack" aria-labelledby="client-title">
           <div className="section-heading-block">
             <p className="technical-label">04 // clients</p>
             <div aria-hidden="true" />
             <h2 id="client-title">Trusted by specialist operators and care brands.</h2>
           </div>
-          <div className="client-logo-grid" aria-label="Selected Hallwicks clients">
-            {clients.map((client) => (
-              <div className="client-logo" key={client}>
-                <span>{client}</span>
-              </div>
-            ))}
-          </div>
-        </section>
+          <ClientLogoGrid clients={clients} />
+        </RevealSection>
 
-        <section className="works-section" id="works" aria-labelledby="works-title">
+        <RevealSection className="works-section" id="works" aria-labelledby="works-title">
           <div className="works-heading">
             <div>
               <p className="technical-label">05 // selected works</p>
               <h2 id="works-title">Featured works.</h2>
             </div>
-            <a className="text-trigger" href="mailto:hallwicks@gmail.com">
-              <span>request portfolio</span>
-              <span aria-hidden="true">+</span>
-            </a>
           </div>
           <WorksGallery projects={projects} />
-        </section>
+        </RevealSection>
 
-        <section className="contact-section" id="contact" aria-labelledby="contact-title">
+        <RevealSection className="contact-section" id="contact" aria-labelledby="contact-title">
           <div className="contact-copy">
             <p className="technical-label">06 // inquiry</p>
             <h2 id="contact-title">Let&apos;s talk.</h2>
@@ -423,7 +415,7 @@ export default function Home() {
               <span aria-hidden="true">+</span>
             </button>
           </form>
-        </section>
+        </RevealSection>
       </main>
 
       <footer className="site-footer">
