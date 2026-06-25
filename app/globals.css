@@ -51,6 +51,37 @@ body {
   text-rendering: optimizeLegibility;
 }
 
+.custom-cursor,
+.custom-cursor * {
+  cursor: none !important;
+}
+
+.cursor-dot {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 200;
+  width: 18px;
+  height: 18px;
+  border-radius: 999px;
+  background: var(--green);
+  opacity: 0;
+  pointer-events: none;
+  transform: translate3d(-100px, -100px, 0) translate(-50%, -50%);
+  transition:
+    opacity 140ms ease,
+    box-shadow 180ms ease;
+  will-change: transform;
+}
+
+.cursor-dot-active {
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.12);
+}
+
+.cursor-dot-hidden {
+  display: none;
+}
+
 p,
 li,
 h1,
@@ -128,12 +159,12 @@ textarea {
 
 .technical-label {
   margin: 0;
-  font-family: var(--mono);
+  font-family: var(--body);
   font-size: 12px;
-  font-weight: 400;
+  font-weight: 600;
   letter-spacing: 0;
   line-height: 1.35;
-  text-transform: lowercase;
+  text-transform: none;
 }
 
 .top-nav {
@@ -205,12 +236,12 @@ textarea {
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  font-family: var(--mono);
+  font-family: var(--body);
   font-size: 12px;
 }
 
 .text-trigger {
-  text-transform: lowercase;
+  text-transform: none;
 }
 
 .nav-inquiry:hover span:first-child,
@@ -316,7 +347,7 @@ textarea {
   border-radius: 999px;
   background: rgba(255, 255, 255, 0.58);
   color: var(--ink);
-  font-family: var(--mono);
+  font-family: var(--body);
   opacity: 0;
   pointer-events: none;
   transform: translateY(12px);
@@ -379,7 +410,7 @@ textarea {
 
 .hero-wordmark {
   position: fixed;
-  top: 84px;
+  top: 96px;
   left: calc(var(--page) - 4px);
   z-index: 80;
   margin: 0;
@@ -394,17 +425,6 @@ textarea {
   transform-style: preserve-3d;
   backface-visibility: hidden;
   will-change: transform, opacity;
-}
-
-.hero-green-dot {
-  position: absolute;
-  top: 46%;
-  left: 59%;
-  z-index: 4;
-  width: 18px;
-  height: 18px;
-  border-radius: 999px;
-  background: var(--green);
 }
 
 .hero-float {
@@ -673,10 +693,10 @@ textarea {
   margin: 0;
   max-width: 560px;
   color: var(--meta);
-  font-family: var(--mono);
+  font-family: var(--body);
   font-size: 12px;
   line-height: 1.55;
-  text-transform: lowercase;
+  text-transform: none;
 }
 
 .capability-grid {
@@ -769,16 +789,16 @@ textarea {
 
 .environment-item::after {
   color: var(--green);
-  font-family: var(--mono);
+  font-family: var(--body);
   font-size: 18px;
   content: "+";
 }
 
 .environment-item p {
   margin: 0;
-  font-family: var(--mono);
+  font-family: var(--body);
   font-size: 12px;
-  text-transform: lowercase;
+  text-transform: none;
 }
 
 .client-section {
@@ -972,9 +992,9 @@ textarea {
 
 .contact-link {
   color: var(--paper);
-  font-family: var(--mono);
+  font-family: var(--body);
   font-size: 12px;
-  text-transform: lowercase;
+  text-transform: none;
   transition: color 180ms ease;
 }
 
@@ -991,9 +1011,9 @@ textarea {
 
 .contact-form span {
   color: var(--meta);
-  font-family: var(--mono);
+  font-family: var(--body);
   font-size: 12px;
-  text-transform: lowercase;
+  text-transform: none;
 }
 
 .contact-form input,
@@ -1005,7 +1025,7 @@ textarea {
   outline: 0;
   background: transparent;
   color: var(--paper);
-  font-family: var(--mono);
+  font-family: var(--body);
   font-size: 14px;
   line-height: 1.5;
   padding: 12px 0;
@@ -1031,9 +1051,9 @@ textarea {
   background: transparent;
   color: var(--paper);
   cursor: pointer;
-  font-family: var(--mono);
+  font-family: var(--body);
   font-size: 12px;
-  text-transform: lowercase;
+  text-transform: none;
 }
 
 .contact-form button:hover span:first-child {
@@ -1072,9 +1092,9 @@ textarea {
   justify-self: end;
   display: flex;
   gap: 22px;
-  font-family: var(--mono);
+  font-family: var(--body);
   font-size: 12px;
-  text-transform: lowercase;
+  text-transform: none;
 }
 
 @media (max-width: 1280px) {
@@ -1234,13 +1254,6 @@ textarea {
     left: auto;
     right: 16%;
     width: min(29vw, 138px);
-  }
-
-  .hero-green-dot {
-    top: 47%;
-    left: 78%;
-    width: 14px;
-    height: 14px;
   }
 
   .stats-panel {

@@ -1,9 +1,10 @@
-import { ExperienceYears } from "@/components/experience-years";
 import { ClientLogoGrid } from "@/components/client-logo-grid";
+import { CursorDot } from "@/components/cursor-dot";
 import { HeroParallax } from "@/components/hero-parallax";
 import { MobileScrollTop } from "@/components/mobile-scroll-top";
 import { RevealSection } from "@/components/reveal-section";
 import { SiteHeader } from "@/components/site-header";
+import { StoryStats } from "@/components/story-stats";
 import { WorksGallery } from "@/components/works-gallery";
 
 const capabilities = [
@@ -48,17 +49,27 @@ const capabilities = [
 const environments = [
   {
     icon: "medical",
-    title: "medical centers",
-    copy: "specialist reception, consultation, imaging, and treatment suites",
+    title: "Medical centres",
+    copy: "consultation suites, imaging support, treatment rooms, and specialist clinical planning",
+  },
+  {
+    icon: "procedure",
+    title: "Day procedure centres",
+    copy: "licensed procedural environments with recovery, support, and clinical workflow controls",
+  },
+  {
+    icon: "lab",
+    title: "Laboratories",
+    copy: "technical rooms, cleanable surfaces, storage, utilities, and specimen handling support",
   },
   {
     icon: "dental",
-    title: "dental clinics",
-    copy: "operatories, sterilization flows, laboratory support, and patient-facing touchpoints",
+    title: "Dental clinics & centres",
+    copy: "operatories, sterilization flows, dental laboratory support, and patient touchpoints",
   },
   {
     icon: "veterinary",
-    title: "veterinary hospitals",
+    title: "Veterinary hospitals",
     copy: "durable healthcare interiors for treatment, waiting, prep, and recovery zones",
   },
 ];
@@ -221,6 +232,19 @@ function EnvironmentIcon({ name }: { name: string }) {
           <path d="M24 18v16M16 26h16M14 8h20" {...common} />
         </>
       )}
+      {name === "procedure" && (
+        <>
+          <path d="M8 16h32v18H8z" {...common} />
+          <path d="M14 16v-5h20v5M14 34v5h20v-5" {...common} />
+          <path d="M17 25h14M24 18v14" {...common} />
+        </>
+      )}
+      {name === "lab" && (
+        <>
+          <path d="M18 8h12M21 8v11L12 36c-1 2 0 4 3 4h18c3 0 4-2 3-4l-9-17V8" {...common} />
+          <path d="M17 31h14" {...common} />
+        </>
+      )}
       {name === "dental" && (
         <>
           <path d="M16 8c-5 3-6 11-3 17l5 13 4-10h4l4 10 5-13c3-6 2-14-3-17-3-2-6-1-8 1-2-2-5-3-8-1z" {...common} />
@@ -250,7 +274,7 @@ export default function Home() {
 
         <RevealSection className="story-section section-stack" id="story" aria-labelledby="story-title">
           <div className="section-heading-block">
-            <p className="technical-label">01 // our story</p>
+            <p className="technical-label">01 // Our story</p>
             <div aria-hidden="true" />
             <h2 id="story-title">
               Designed for care environments where precision is operational.
@@ -281,20 +305,7 @@ export default function Home() {
                 ready for long-term professional use.
               </p>
             </div>
-            <aside className="stats-panel" aria-label="Hallwicks facts">
-              <div>
-                <span className="technical-label">founded</span>
-                <strong>1987</strong>
-              </div>
-              <div>
-                <span className="technical-label">experience</span>
-                <ExperienceYears />
-              </div>
-              <div>
-                <span className="technical-label">regions</span>
-                <strong>HK.China.SG</strong>
-              </div>
-            </aside>
+            <StoryStats />
           </div>
         </RevealSection>
 
@@ -305,7 +316,7 @@ export default function Home() {
         >
           <div className="section-stack capabilities-intro">
             <div className="section-heading-block">
-              <p className="technical-label">02 // capabilities</p>
+              <p className="technical-label">02 // Capabilities</p>
               <div aria-hidden="true" />
               <h2 id="capabilities-title">One-stop clinical design intelligence.</h2>
             </div>
@@ -330,7 +341,7 @@ export default function Home() {
 
         <RevealSection className="environments-section section-stack" aria-labelledby="env-title">
           <div className="section-heading-block">
-            <p className="technical-label">03 // environments</p>
+            <p className="technical-label">03 // Environments</p>
             <div aria-hidden="true" />
             <h2 id="env-title">Specialized environments, exact requirements.</h2>
           </div>
@@ -347,7 +358,7 @@ export default function Home() {
 
         <RevealSection className="client-section section-stack" aria-labelledby="client-title">
           <div className="section-heading-block">
-            <p className="technical-label">04 // clients</p>
+            <p className="technical-label">04 // Clients</p>
             <div aria-hidden="true" />
             <h2 id="client-title">Trusted by specialist operators and care brands.</h2>
           </div>
@@ -357,7 +368,7 @@ export default function Home() {
         <RevealSection className="works-section" id="works" aria-labelledby="works-title">
           <div className="works-heading">
             <div>
-              <p className="technical-label">05 // selected works</p>
+              <p className="technical-label">05 // Selected works</p>
               <h2 id="works-title">Featured works.</h2>
             </div>
           </div>
@@ -366,7 +377,7 @@ export default function Home() {
 
         <RevealSection className="contact-section" id="contact" aria-labelledby="contact-title">
           <div className="contact-copy">
-            <p className="technical-label">06 // inquiry</p>
+            <p className="technical-label">06 // Inquiry</p>
             <h2 id="contact-title">Let&apos;s talk.</h2>
             <p>
               Start a conversation about a clinic, medical center, dental suite,
@@ -408,7 +419,7 @@ export default function Home() {
 
       <footer className="site-footer">
         <p className="footer-brand">hallwicks</p>
-        <p className="technical-label">hallwicks design limited // © 2026</p>
+        <p className="technical-label">Hallwicks Design Limited // © 2026</p>
         <div className="footer-links">
           <a href="#story">history</a>
           <a href="#capabilities">services</a>
@@ -417,6 +428,7 @@ export default function Home() {
         </div>
       </footer>
       <MobileScrollTop />
+      <CursorDot />
     </>
   );
 }

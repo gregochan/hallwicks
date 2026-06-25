@@ -118,7 +118,6 @@ export function HeroParallax() {
       </Floating>
 
       <div className="hero-grid-lines" aria-hidden="true" />
-      <div className="hero-green-dot" aria-hidden="true" />
       <p className="hero-wordmark" aria-hidden="true">
         hallwicks.
       </p>
@@ -130,7 +129,13 @@ export function HeroParallax() {
         <p className="technical-label hero-rotator">
           specialized environments //
           <TextRotate
-            texts={["medical centers", "dental clinics", "veterinary hospitals"]}
+            texts={[
+              "Medical centres",
+              "Day procedure centres",
+              "Laboratories",
+              "Dental clinics & centres",
+              "Veterinary hospitals",
+            ]}
             mainClassName="hero-rotate"
             rotationInterval={2600}
             staggerDuration={0.012}
