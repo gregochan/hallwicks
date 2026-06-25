@@ -59,6 +59,17 @@ const environments = [
   },
 ];
 
+const clients = [
+  "Great People",
+  "St. George",
+  "Clinic A",
+  "Conch Hospital",
+  "Varios Dental",
+  "VSH",
+  "Langham Place",
+  "Monnis",
+];
+
 const projects = [
   {
     title: "Great People Branemark Center",
@@ -258,14 +269,26 @@ export default function Home() {
           <div className="story-content-grid">
             <div className="story-copy">
               <p>
-                Hallwicks Design Limited has spent nearly four decades developing
-                focused design capability for medical and dental clinics across
-                Hong Kong, China, and Singapore.
+                Since 1987, Hallwicks has built a focused studio practice around
+                medical and dental clinic environments across Hong Kong, China,
+                and Singapore.
               </p>
               <p>
-                The studio works closely with clients to translate clinical
-                workflow, brand image, budget, and patient experience into
-                bespoke interiors that feel calm, exacting, and enduring.
+                We translate clinical workflow, patient movement, infection-aware
+                detailing, brand image, and budget control into interiors that
+                are efficient, precise, and quietly distinctive.
+              </p>
+              <p>
+                Clients work with us because the design process is joined to
+                delivery knowledge: planning, interior design, cost analysis,
+                lighting design, site coordination, and direct access to
+                furniture manufacturing resources in China.
+              </p>
+              <p>
+                That integrated model gives each project a disciplined path from
+                brief to handover, keeping technical requirements visible,
+                details buildable, and the finished clinic calm, functional, and
+                ready for long-term professional use.
               </p>
             </div>
             <aside className="stats-panel" aria-label="Hallwicks facts">
@@ -332,10 +355,25 @@ export default function Home() {
           </div>
         </section>
 
+        <section className="client-section section-stack" aria-labelledby="client-title">
+          <div className="section-heading-block">
+            <p className="technical-label">04 // clients</p>
+            <div aria-hidden="true" />
+            <h2 id="client-title">Trusted by specialist operators and care brands.</h2>
+          </div>
+          <div className="client-logo-grid" aria-label="Selected Hallwicks clients">
+            {clients.map((client) => (
+              <div className="client-logo" key={client}>
+                <span>{client}</span>
+              </div>
+            ))}
+          </div>
+        </section>
+
         <section className="works-section" id="works" aria-labelledby="works-title">
           <div className="works-heading">
             <div>
-              <p className="technical-label">04 // selected works</p>
+              <p className="technical-label">05 // selected works</p>
               <h2 id="works-title">Featured works.</h2>
             </div>
             <a className="text-trigger" href="mailto:hallwicks@gmail.com">
@@ -348,7 +386,7 @@ export default function Home() {
 
         <section className="contact-section" id="contact" aria-labelledby="contact-title">
           <div className="contact-copy">
-            <p className="technical-label">05 // inquiry</p>
+            <p className="technical-label">06 // inquiry</p>
             <h2 id="contact-title">Let&apos;s talk.</h2>
             <p>
               Start a conversation about a clinic, medical center, dental suite,
