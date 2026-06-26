@@ -1,18 +1,20 @@
 import type { NextConfig } from "next";
 
-const strapiUrl = process.env.STRAPI_API_URL;
-const strapiRemotePattern = strapiUrl
-  ? (() => {
-      const url = new URL(strapiUrl);
+function remotePatternFromUrl(value?: string) {
+  if (!value) return null;
 
-      return {
-        hostname: url.hostname,
-        pathname: "/uploads/**",
-        port: url.port,
-        protocol: url.protocol.replace(":", "") as "http" | "https",
-      };
-    })()
-  : null;
+  const url = new URL(value);
+
+  return {
+    hostname: url.hostname,
+    pathname: "/uploads/**",
+    port: url.port,
+    protocol: url.protocol.replace(":", "") as "http" | "https",
+  };
+}
+
+const phpApiRemotePattern = remotePatternFromUrl(process.env.HALLWICKS_API_URL);
+const strapiRemotePattern = remotePatternFromUrl(process.env.STRAPI_API_URL);
 
 const nextConfig: NextConfig = {
   images: {
@@ -23,6 +25,7 @@ const nextConfig: NextConfig = {
         port: "1337",
         protocol: "http",
       },
+      ...(phpApiRemotePattern ? [phpApiRemotePattern] : []),
       ...(strapiRemotePattern ? [strapiRemotePattern] : []),
     ],
   },

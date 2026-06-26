@@ -1,0 +1,5 @@
+/config.php
+uploads/works/public/*
+uploads/works/original-private/*
+!uploads/works/public/.htaccess
+!uploads/works/original-private/.htaccess

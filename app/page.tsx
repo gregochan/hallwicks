@@ -6,7 +6,7 @@ import { RevealSection } from "@/components/reveal-section";
 import { SiteHeader } from "@/components/site-header";
 import { StoryStats } from "@/components/story-stats";
 import { WorksGallery } from "@/components/works-gallery";
-import { getSiteContent } from "@/lib/content/strapi";
+import { getSiteContent } from "@/lib/content/php-api";
 
 function ServiceIcon({ name }: { name: string }) {
   const common = {

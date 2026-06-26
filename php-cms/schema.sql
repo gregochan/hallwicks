@@ -1,0 +1,15 @@
+CREATE TABLE IF NOT EXISTS featured_works (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  title VARCHAR(255) NOT NULL,
+  meta VARCHAR(255) NOT NULL,
+  description TEXT NULL,
+  image_url VARCHAR(500) NOT NULL,
+  alt VARCHAR(255) NOT NULL,
+  layout ENUM('large', 'tall', 'square', 'wide', 'small') NOT NULL DEFAULT 'small',
+  display_order INT NOT NULL DEFAULT 0,
+  published TINYINT(1) NOT NULL DEFAULT 1,
+  source ENUM('admin', 'telegram', 'whatsapp', 'api') NOT NULL DEFAULT 'admin',
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  INDEX idx_featured_works_public (published, display_order, title)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;

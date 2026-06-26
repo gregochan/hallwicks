@@ -16,7 +16,6 @@ npm install
 npm run dev
 npm run lint
 npm run build
-npm run strapi:dev
 ```
 
 The project builds with `vinext` and the Sites Vite plugin. Deployment metadata
@@ -29,7 +28,7 @@ is a static brand site.
 - Animation: GSAP with `ScrollTrigger`, `SplitText`, and `Flip` registered in `lib/animation/gsap.ts`.
 - Interaction: Lenis smooth scrolling via `components/animation/lenis-provider.tsx`, synced to GSAP's ticker.
 - Visual system: DOM/CSS, `clip-path`, transforms, fixed-grid layering, and local bitmap project imagery.
-- Content: Strapi REST API boundary in `lib/content/strapi.ts`, with local fallback data in `lib/content/fallback.ts`.
+- Content: PHP/MySQL Featured Works API boundary in `lib/content/php-api.ts`, with local fallback data in `lib/content/fallback.ts`.
 
 ## Site Structure
 
@@ -38,30 +37,28 @@ is a static brand site.
 - `components/animation/`: client animation and interaction providers
 - `components/`: page sections, header, galleries, icons, cursor, and utility UI
 - `lib/animation/`: GSAP plugin registration and animation exports
-- `lib/content/`: Strapi REST client, content types, and local fallback content
-- `backend/`: Strapi 5 backend for editable Featured Works
+- `lib/content/`: PHP API client, optional Strapi client, content types, and local fallback content
+- `php-cms/`: small PHP/MySQL editor and API for editable Featured Works
+- `backend/`: optional Strapi 5 backend kept for future CMS experiments
 - `public/images/`: local clinical-interior bitmap assets
 - `public/screenshot.jpeg`: canonical Sites preview image
 
 ## Content API
 
-Set these environment variables when Strapi is ready:
+Set this environment variable when the PHP API is live:
 
 ```bash
-STRAPI_API_URL=https://your-strapi-domain.com
-STRAPI_API_TOKEN=optional-read-token
+HALLWICKS_API_URL=https://hallwicks.com/api/featured-works.php
 ```
 
-Without those variables, the site uses `fallbackSiteContent`, so builds remain
-stable while the CMS model is being prepared.
+Without this variable, the site uses `fallbackSiteContent`, so builds remain
+stable while the PHP backend is being prepared.
 
-The Strapi backend lives in `backend/`. Run it with:
+The PHP/MySQL editor lives in `php-cms/`. Install it on the existing PHP host:
 
 ```bash
-cp backend/.env.example backend/.env
-npm --prefix backend install
-npm run strapi:dev
+cp php-cms/config.example.php php-cms/config.php
+# import php-cms/schema.sql into MySQL
 ```
 
-Create and publish **Featured Work** entries in Strapi to update the site's
-Featured Works section.
+Then open `/admin/login.php` on the PHP host to manage Featured Works.
