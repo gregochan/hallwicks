@@ -222,6 +222,16 @@ textarea {
   opacity: var(--nav-brand-opacity, 0);
 }
 
+.nav-ribbon-mark {
+  grid-column: 3;
+  justify-self: end;
+  width: 46px;
+  height: 46px;
+  object-fit: contain;
+  opacity: 0.86;
+  user-select: none;
+}
+
 .nav-links {
   grid-column: 2;
   display: flex;
@@ -726,7 +736,7 @@ textarea {
   z-index: 0;
   overflow: hidden;
   pointer-events: none;
-  opacity: 0.72;
+  opacity: 0.9;
 }
 
 .story-mesh-shader {
@@ -736,17 +746,17 @@ textarea {
   height: 100%;
   min-height: 100%;
   display: block;
-  opacity: 0.66;
+  opacity: 0.82;
 }
 
 .story-mesh-fallback {
   position: absolute;
   inset: -16%;
   background:
-    radial-gradient(circle at 18% 16%, rgba(11, 193, 165, 0.42), transparent 27%),
-    radial-gradient(circle at 76% 30%, rgba(78, 169, 214, 0.28), transparent 30%),
-    radial-gradient(circle at 48% 82%, rgba(11, 193, 165, 0.28), transparent 32%),
-    linear-gradient(135deg, rgba(255, 255, 255, 0.88), rgba(222, 242, 238, 0.72) 46%, rgba(249, 249, 249, 0.95));
+    radial-gradient(circle at 16% 18%, rgba(11, 193, 165, 0.62), transparent 29%),
+    radial-gradient(circle at 78% 27%, rgba(78, 169, 214, 0.46), transparent 31%),
+    radial-gradient(circle at 48% 82%, rgba(11, 193, 165, 0.42), transparent 34%),
+    linear-gradient(135deg, rgba(255, 255, 255, 0.78), rgba(202, 239, 232, 0.78) 46%, rgba(249, 249, 249, 0.9));
   filter: blur(18px);
 }
 
@@ -754,8 +764,8 @@ textarea {
   position: absolute;
   inset: 0;
   background:
-    linear-gradient(90deg, rgba(249, 249, 249, 0.9) 0%, rgba(249, 249, 249, 0.48) 46%, rgba(249, 249, 249, 0.88) 100%),
-    linear-gradient(180deg, rgba(249, 249, 249, 0.82) 0%, rgba(249, 249, 249, 0.22) 42%, rgba(249, 249, 249, 0.93) 100%);
+    linear-gradient(90deg, rgba(249, 249, 249, 0.78) 0%, rgba(249, 249, 249, 0.28) 46%, rgba(249, 249, 249, 0.74) 100%),
+    linear-gradient(180deg, rgba(249, 249, 249, 0.7) 0%, rgba(249, 249, 249, 0.12) 42%, rgba(249, 249, 249, 0.84) 100%);
 }
 
 .section-heading-block {
@@ -1312,6 +1322,10 @@ textarea {
   }
 
   .nav-inquiry {
+    display: none;
+  }
+
+  .nav-ribbon-mark {
     display: none;
   }
 

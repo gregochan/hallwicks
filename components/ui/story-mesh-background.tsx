@@ -21,9 +21,9 @@ export function StoryMeshBackground() {
       <div className="story-mesh-fallback" />
       <MeshGradient
         className="story-mesh-shader"
-        colors={["#f8f8f8", "#ffffff", "#e6f8f5", "#0bc1a5", "#d8dfdd"]}
+        colors={["#f7fbfa", "#ffffff", "#c9f1ea", "#0bc1a5", "#62aedd", "#b5dcd4"]}
         distortion={0.86}
-        swirl={0.28}
+        swirl={0.34}
         speed={prefersReducedMotion ? 0 : 0.12}
         grainMixer={0}
         grainOverlay={0}

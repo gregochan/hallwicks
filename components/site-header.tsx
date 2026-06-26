@@ -44,6 +44,15 @@ export function SiteHeader() {
           <span aria-hidden="true" />
           <span aria-hidden="true" />
         </button>
+        <Image
+          alt=""
+          className="nav-ribbon-mark"
+          draggable={false}
+          height={408}
+          priority
+          src="/images/brand/hallwicks-mark.png"
+          width={404}
+        />
       </header>
 
       <div className={open ? "mobile-menu mobile-menu-open" : "mobile-menu"} id="mobile-menu">
