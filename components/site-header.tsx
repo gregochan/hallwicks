@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { useState } from "react";
 import type { CSSProperties } from "react";
 
@@ -23,7 +24,15 @@ export function SiteHeader() {
     <>
       <header className="top-nav" aria-label="Primary navigation" style={glassStyle}>
         <a className="nav-brand" href="#top" aria-label="Hallwicks home" onClick={close}>
-          hallwicks
+          <span>hallwicks</span>
+          <Image
+            alt=""
+            className="nav-brand-mark"
+            draggable={false}
+            height={31}
+            src="/images/brand/hallwicks-mark.png"
+            width={31}
+          />
         </a>
         <nav className="nav-links" aria-label="Section links">
           {links.map((link) => (
@@ -67,6 +76,14 @@ export function SiteHeader() {
             </a>
           ))}
         </nav>
+        <Image
+          alt=""
+          className="mobile-menu-mark"
+          draggable={false}
+          height={408}
+          src="/images/brand/hallwicks-mark.png"
+          width={404}
+        />
       </div>
     </>
   );

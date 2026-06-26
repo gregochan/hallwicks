@@ -18,6 +18,7 @@ export function StoryMeshBackground() {
 
   return (
     <div className="story-mesh-background" aria-hidden="true">
+      <div className="story-mesh-fallback" />
       <MeshGradient
         className="story-mesh-shader"
         colors={["#f8f8f8", "#ffffff", "#e6f8f5", "#0bc1a5", "#d8dfdd"]}
