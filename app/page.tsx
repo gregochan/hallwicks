@@ -5,6 +5,7 @@ import { MobileScrollTop } from "@/components/mobile-scroll-top";
 import { RevealSection } from "@/components/reveal-section";
 import { SiteHeader } from "@/components/site-header";
 import { StoryStats } from "@/components/story-stats";
+import { StoryMeshBackground } from "@/components/ui/story-mesh-background";
 import { WorksGallery } from "@/components/works-gallery";
 import { getSiteContent } from "@/lib/content/php-api";
 
@@ -125,6 +126,7 @@ export default async function Home() {
         <HeroParallax />
 
         <RevealSection className="story-section section-stack" id="story" aria-labelledby="story-title">
+          <StoryMeshBackground />
           <div className="section-heading-block">
             <p className="technical-label">01 // Our story</p>
             <div aria-hidden="true" />
