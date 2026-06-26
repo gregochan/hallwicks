@@ -38,8 +38,9 @@ is a static brand site.
 - `components/`: page sections, header, galleries, icons, cursor, and utility UI
 - `lib/animation/`: GSAP plugin registration and animation exports
 - `lib/content/`: PHP API client, optional Strapi client, content types, and local fallback content
-- `php-cms/`: small PHP/MySQL editor and API for editable Featured Works
-- `backend/`: optional Strapi 5 backend kept for future CMS experiments
+- `backend/`: upload this PHP/MySQL editor and API folder to the PHP server
+- `archive/`: old source artifacts, including the original HTML and archived Strapi experiment
+- `invoice-ninja/`: Invoice Ninja quote template/reference files
 - `public/images/`: local clinical-interior bitmap assets
 - `public/screenshot.jpeg`: canonical Sites preview image
 
@@ -54,11 +55,12 @@ HALLWICKS_API_URL=https://hallwicks.com/api/featured-works.php
 Without this variable, the site uses `fallbackSiteContent`, so builds remain
 stable while the PHP backend is being prepared.
 
-The PHP/MySQL editor lives in `php-cms/`. Install it on the existing PHP host:
+The PHP/MySQL editor lives in `backend/`. Upload the contents of this folder to
+the existing PHP host:
 
 ```bash
-cp php-cms/config.example.php php-cms/config.php
-# import php-cms/schema.sql into MySQL
+cp backend/config.example.php backend/config.php
+# import backend/schema.sql into MySQL
 ```
 
 Then open `/admin/login.php` on the PHP host to manage Featured Works.

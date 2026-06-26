@@ -1,0 +1,177 @@
+<div id="body">
+<table style="min-width: 100%">
+    <thead>
+        <tr>
+            <td>
+                <div class="repeating-header-space">&nbsp;</div>
+            </td>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>
+                <div class="header-wrapper">
+                    <div id="company-details"></div>
+                    <div id="company-address"></div>
+                    <div id="logo-container">
+                        <img class="company-logo" src="$company.logo" alt="$company.name logo">
+                    </div>
+                </div>
+                <div class="client-wrapper">
+                    <div id="client-details"></div>
+                    <div id="vendor-details"></div>
+                    <div id="shipping-details"></div>
+                    <div id="entity-container">
+                        <table id="entity-details" cellspacing="0" cellpadding="0" dir="$dir"></table>
+                    </div>
+                </div>
+
+                <ninja>
+                {% set entity_doc = null %}
+                {% if quote is defined and quote %}
+                    {% set entity_doc = quote %}
+                {% elseif invoice is defined and invoice %}
+                    {% set entity_doc = invoice %}
+                {% elseif purchase_order is defined and purchase_order %}
+                    {% set entity_doc = purchase_order %}
+                {% elseif quotes is defined and quotes is not empty %}
+                    {% set entity_doc = quotes|first %}
+                {% elseif invoices is defined and invoices is not empty %}
+                    {% set entity_doc = invoices|first %}
+                {% elseif purchase_orders is defined and purchase_orders is not empty %}
+                    {% set entity_doc = purchase_orders|first %}
+                {% endif %}
+
+                {% if entity_doc %}
+                    {% set sections = [] %}
+                    {% for item in entity_doc.line_items %}
+                        {% set section_name = item.custom_value1 %}
+                        {% if section_name is empty %}
+                            {% set section_name = 'General' %}
+                        {% endif %}
+                        {% if section_name not in sections %}
+                            {% set sections = sections|merge([section_name]) %}
+                        {% endif %}
+                    {% endfor %}
+
+                    {% if entity_doc.custom_value1 is not empty or entity_doc.custom_value2 is not empty %}
+                    <div class="hdl-reference-block">
+                        {% if entity_doc.custom_value1 is not empty %}
+                            <div><strong>Attn:</strong><span>{{ entity_doc.custom_value1 }}</span></div>
+                        {% endif %}
+                        {% if entity_doc.custom_value2 is not empty %}
+                            <div><strong>Re:</strong><span>{{ entity_doc.custom_value2 }}</span></div>
+                        {% endif %}
+                    </div>
+                    {% endif %}
+
+                    <table class="hdl-sectioned-items" cellspacing="0">
+                        <thead>
+                            <tr>
+                                <th>Item</th>
+                                <th>Description</th>
+                                <th>Qty</th>
+                                <th>Unit Cost</th>
+                                <th>Line Total</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        {% set current_section = '' %}
+                        {% set current_subsection = '' %}
+                        {% for item in entity_doc.line_items %}
+                            {% set row_section = item.custom_value1 %}
+                            {% if row_section is empty %}
+                                {% set row_section = 'General' %}
+                            {% endif %}
+
+                            {% if row_section != current_section %}
+                                {% set current_section = row_section %}
+                                {% set current_subsection = '' %}
+                                <tr class="hdl-section-row">
+                                    <td colspan="5">{{ row_section }}</td>
+                                </tr>
+                            {% endif %}
+
+                            {% if item.custom_value2 is not empty and item.custom_value2 != current_subsection %}
+                                {% set current_subsection = item.custom_value2 %}
+                                <tr class="hdl-subsection-row">
+                                    <td colspan="5">{{ current_subsection }}</td>
+                                </tr>
+                            {% endif %}
+
+                            <tr class="hdl-item-row">
+                                <td class="hdl-item-code">{% if item.custom_value4 is not empty %}{{ item.custom_value4 }}{% else %}{{ item.product_key }}{% endif %}</td>
+                                <td class="hdl-item-description">{{ item.notes|nl2br }}</td>
+                                <td class="hdl-item-quantity">{{ item.quantity|format_number }}{% if item.custom_value3 is not empty %} {{ item.custom_value3 }}{% endif %}</td>
+                                <td class="hdl-item-cost">{{ item.cost_raw|format_number }}</td>
+                                <td class="hdl-item-total">{{ item.line_total }}</td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+
+                    {% if sections|length > 3 %}
+                    <div class="hdl-section-summary">
+                        <table cellspacing="0">
+                            <tbody>
+                            {% for section_name in sections %}
+                                {% set section_total = 0 %}
+                                {% for item in entity_doc.line_items %}
+                                    {% set item_section = item.custom_value1 %}
+                                    {% if item_section is empty %}
+                                        {% set item_section = 'General' %}
+                                    {% endif %}
+                                    {% if item_section == section_name %}
+                                        {% set section_total = section_total + item.line_total_raw %}
+                                    {% endif %}
+                                {% endfor %}
+                                <tr>
+                                    <td>{{ section_name }}</td>
+                                    <td>{{ section_total|format_currency('HKD') }}</td>
+                                </tr>
+                            {% endfor %}
+                            <tr class="hdl-grand-total">
+                                <td>GRAND TOTAL:</td>
+                                <td>{{ entity_doc.amount }}</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    {% endif %}
+                {% endif %}
+                </ninja>
+
+                <div class="hdl-hidden-ninja-tables">
+                    <table id="product-table" cellspacing="0" data-ref="table"></table>
+                    <table id="task-table" cellspacing="0" data-ref="table"></table>
+                    <table id="delivery-note-table" cellspacing="0" data-ref="table"></table>
+                </div>
+                <table id="statement-invoice-table" cellspacing="0" data-ref="table"></table>
+                <div id="statement-invoice-table-totals" data-ref="statement-totals"></div>
+                <table id="statement-payment-table" cellspacing="0" data-ref="table"></table>
+                <div id="statement-payment-table-totals" data-ref="statement-totals"></div>
+                <table id="statement-unapplied-payment-table" cellspacing="0" data-ref="table"></table>
+                <div id="statement-unapplied-payment-table-totals" data-ref="statement-totals"></div>
+                <table id="statement-credit-table" cellspacing="0" data-ref="table"></table>
+                <div id="statement-credit-table-totals" data-ref="statement-totals"></div>
+                <table id="statement-aging-table" cellspacing="0" data-ref="table"></table>
+                <div id="statement-aging-table-totals" data-ref="statement-totals"></div>
+                <div id="table-totals" cellspacing="0">$status_logo</div>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                $entity_images
+            </td>
+        </tr>
+        $verifactu_qr_code
+    </tbody>
+    <tfoot>
+        <tr>
+            <td>
+                <div class="repeating-footer-space">&nbsp;</div>
+            </td>
+        </tr>
+    </tfoot>
+</table>
+</div>

@@ -1,0 +1,263 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Hallwicks Quote Preview</title>
+  <style>
+    @page {
+      size: A4 portrait;
+      margin: 22mm 14mm 18mm;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      background: #eee;
+      color: #111;
+      font-family: Arial, "PingFang HK", "Microsoft JhengHei", "Noto Sans CJK TC", sans-serif;
+      font-size: 14pt;
+      line-height: 1.28;
+    }
+
+    .sheet {
+      position: relative;
+      width: 210mm;
+      min-height: 297mm;
+      margin: 24px auto;
+      padding: 22mm 14mm 18mm;
+      background: #fff;
+      box-shadow: 0 12px 34px rgba(0, 0, 0, 0.18);
+    }
+
+    .fixed-title {
+      text-align: center;
+      font-size: 16pt;
+      margin-bottom: 14mm;
+    }
+
+    .fixed-footer {
+      position: absolute;
+      left: 14mm;
+      right: 14mm;
+      bottom: 10mm;
+      text-align: center;
+      font-size: 11pt;
+    }
+
+    .top-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 70mm;
+      column-gap: 18mm;
+      margin-bottom: 0;
+    }
+
+    .client-name {
+      font-weight: 700;
+      margin: 0 0 1mm;
+    }
+
+    .client-line,
+    .meta-row {
+      margin: 0;
+    }
+
+    .meta-row {
+      display: grid;
+      grid-template-columns: 30mm 1fr;
+      column-gap: 5mm;
+    }
+
+    .meta-row span:first-child,
+    .label-inline {
+      font-weight: 700;
+    }
+
+    .attn,
+    .subject {
+      margin-top: 9mm;
+    }
+
+    .subject {
+      margin-bottom: 9mm;
+    }
+
+    .label-inline {
+      display: inline-block;
+      min-width: 16mm;
+    }
+
+    .title-band,
+    .section-band {
+      background: #dfdcc8;
+      font-weight: 700;
+    }
+
+    .title-band {
+      margin: 0 0 9mm;
+      padding: 1.5mm 15mm;
+      font-size: 16pt;
+    }
+
+    .section-band {
+      display: grid;
+      grid-template-columns: 15mm 1fr;
+      margin-top: 6mm;
+      padding: 1.5mm 0;
+    }
+
+    .item-row {
+      display: grid;
+      grid-template-columns: 12mm minmax(0, 1fr) 23mm 22mm 36mm;
+      column-gap: 2mm;
+      padding-top: 7mm;
+    }
+
+    .item-total {
+      text-align: right;
+      white-space: nowrap;
+    }
+
+    .item-qty,
+    .item-rate {
+      white-space: nowrap;
+    }
+
+    .quote-total {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 36mm;
+      column-gap: 2mm;
+      margin-top: 9mm;
+    }
+
+    .quote-total span:first-child,
+    .quote-total span:last-child {
+      text-align: right;
+    }
+
+    @media print {
+      body {
+        background: #fff;
+      }
+
+      .sheet {
+        width: auto;
+        min-height: 0;
+        margin: 0;
+        padding: 0;
+        box-shadow: none;
+      }
+
+      .fixed-footer {
+        position: fixed;
+        bottom: -8mm;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="sheet">
+    <div class="fixed-title">HALLWICKS DESIGN LIMITED</div>
+
+    <section class="top-grid">
+      <div>
+        <p class="client-name">UMP Dental Cental</p>
+        <p class="client-line">15/F No. 22, Yee Woo Street</p>
+        <p class="client-line">Causeway Bay Hong Kong</p>
+      </div>
+      <div>
+        <p class="meta-row"><span>Date:</span><span>3/11/2025</span></p>
+        <p class="meta-row"><span>Quo. No:</span><span>HCL-Q-1005</span></p>
+      </div>
+    </section>
+
+    <p class="attn"><span class="label-inline">Attn:</span>Mr. Ko</p>
+    <p class="subject"><span class="label-inline">Re:</span>香港銅鑼灣 怡和街22號15樓還原工程</p>
+
+    <div class="title-band">報價單</div>
+
+    <div class="section-band"><span>A.</span><span>清拆工程</span></div>
+    <div class="item-row">
+      <div>A1.</div>
+      <div>第三者保險, 工地水火保險<br>保障約港幣2千萬。(勞保不包括在內)</div>
+      <div>1 job</div>
+      <div>4200</div>
+      <div class="item-total">HK$4,200.00</div>
+    </div>
+    <div class="item-row">
+      <div>A2.</div>
+      <div>全間診所連木門, 間隔, 天花全拆<br>及清走。</div>
+      <div>1 job</div>
+      <div>35000</div>
+      <div class="item-total">HK$35,000.00</div>
+    </div>
+    <div class="item-row">
+      <div>A3.</div>
+      <div>原有加高地台拆走及清走。</div>
+      <div>1 job</div>
+      <div>8000</div>
+      <div class="item-total">HK$8,000.00</div>
+    </div>
+    <div class="item-row">
+      <div>A4.</div>
+      <div>原有吊風機(FAN COIL)保留, 拆去風喉<br>及相關吊架, 溫度制保留。</div>
+      <div>1 job</div>
+      <div>5000</div>
+      <div class="item-total">HK$5,000.00</div>
+    </div>
+
+    <div class="section-band"><span>B.</span><span>電燈及水利工程</span></div>
+    <div class="item-row">
+      <div>B1.</div>
+      <div>拆走所有燈喉及燈具連清走。</div>
+      <div>1 job</div>
+      <div>6000</div>
+      <div class="item-total">HK$6,000.00</div>
+    </div>
+    <div class="item-row">
+      <div>B2.</div>
+      <div>拆走所有水喉及氣喉連清走。</div>
+      <div>1 job</div>
+      <div>6000</div>
+      <div class="item-total">HK$6,000.00</div>
+    </div>
+    <div class="item-row">
+      <div>B3.</div>
+      <div>來水及去水位置做回閘制。</div>
+      <div>1 job</div>
+      <div>2500</div>
+      <div class="item-total">HK$2,500.00</div>
+    </div>
+    <div class="item-row">
+      <div>B4.</div>
+      <div>拆去總制箱後做回30A 曲架制供電,<br>天花支架4套連開關燈制, 13A 插座2個。</div>
+      <div>1 job</div>
+      <div>13000</div>
+      <div class="item-total">HK$13,000.00</div>
+    </div>
+
+    <div class="section-band"><span>C.</span><span>牆身及地台</span></div>
+    <div class="item-row">
+      <div>C1.</div>
+      <div>地台用英泥沙盪平。</div>
+      <div>1 job</div>
+      <div>8500</div>
+      <div class="item-total">HK$8,500.00</div>
+    </div>
+    <div class="item-row">
+      <div>C2.</div>
+      <div>牆壁執補及油白色乳膠漆。</div>
+      <div>1 job</div>
+      <div>15000</div>
+      <div class="item-total">HK$15,000.00</div>
+    </div>
+
+    <div class="quote-total"><span>TOTAL:</span><span>HK$103,200.00</span></div>
+
+    <div class="fixed-footer">408-412 JAFFE ROAD UNIT 1105 WORKINGFIELD COMMERCIAL BUILDING CWB HK</div>
+  </main>
+</body>
+</html>

@@ -9,10 +9,7 @@
     "dev": "vinext dev",
     "build": "vinext build",
     "start": "vinext start",
-    "lint": "eslint . --ignore-pattern dist --ignore-pattern .next --ignore-pattern backend --ignore-pattern .agents --ignore-pattern .gemini",
-    "strapi:dev": "npm --prefix backend run develop",
-    "strapi:build": "npm --prefix backend run build",
-    "strapi:start": "npm --prefix backend run start"
+    "lint": "eslint . --ignore-pattern dist --ignore-pattern .next --ignore-pattern backend --ignore-pattern archive --ignore-pattern .agents --ignore-pattern .gemini"
   },
   "dependencies": {
     "gsap": "^3.15.0",
