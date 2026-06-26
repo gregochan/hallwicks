@@ -77,7 +77,7 @@ body {
   position: fixed;
   top: 0;
   left: 0;
-  z-index: 200;
+  z-index: 320;
   width: 18px;
   height: 18px;
   border-radius: 999px;
@@ -316,7 +316,7 @@ textarea {
 .mobile-menu {
   position: fixed;
   inset: 0;
-  z-index: 180;
+  z-index: 300;
   display: none;
   align-content: start;
   gap: clamp(80px, 12svh, 128px);
@@ -507,7 +507,7 @@ textarea {
   position: fixed;
   top: 96px;
   left: calc(var(--page) - 4px);
-  z-index: 95;
+  z-index: 180;
   margin: 0;
   font-family: var(--display);
   font-size: clamp(118px, 20vw, 272px);
