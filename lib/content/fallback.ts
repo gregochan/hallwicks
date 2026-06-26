@@ -1,0 +1,151 @@
+import type { SiteContent } from "@/lib/content/types";
+
+export const fallbackSiteContent: SiteContent = {
+  capabilities: [
+    {
+      number: "01",
+      icon: "planning",
+      title: "Space Planning",
+      copy: "Functional zoning, clinical adjacencies, circulation, and sterile workflow planning for specialist environments.",
+    },
+    {
+      number: "02",
+      icon: "management",
+      title: "Project Management",
+      copy: "Consultant coordination, programme control, procurement alignment, and execution discipline from brief to handover.",
+    },
+    {
+      number: "03",
+      icon: "analysis",
+      title: "Cost Analysis",
+      copy: "Early-stage budgeting, specification control, and value planning calibrated to healthcare-grade requirements.",
+    },
+    {
+      number: "04",
+      icon: "site",
+      title: "On-Site Management",
+      copy: "Field supervision, installation sequencing, and detail control for highly serviced medical fit-outs.",
+    },
+    {
+      number: "05",
+      icon: "interior",
+      title: "Interior Design",
+      copy: "Precise interior architecture, custom joinery, lighting, finishes, and furniture systems for care settings.",
+    },
+    {
+      number: "06",
+      icon: "brand",
+      title: "Brand Experience",
+      copy: "Spatial identity systems that translate a clinical brand into reception, treatment, and consultation spaces.",
+    },
+  ],
+  environments: [
+    {
+      icon: "medical",
+      title: "Medical centres",
+      copy: "consultation suites, imaging support, treatment rooms, and specialist clinical planning",
+    },
+    {
+      icon: "procedure",
+      title: "Day procedure centres",
+      copy: "licensed procedural environments with recovery, support, and clinical workflow controls",
+    },
+    {
+      icon: "lab",
+      title: "Laboratories",
+      copy: "technical rooms, cleanable surfaces, storage, utilities, and specimen handling support",
+    },
+    {
+      icon: "dental",
+      title: "Dental clinics & centres",
+      copy: "operatories, sterilization flows, dental laboratory support, and patient touchpoints",
+    },
+    {
+      icon: "veterinary",
+      title: "Veterinary hospitals",
+      copy: "durable healthcare interiors for treatment, waiting, prep, and recovery zones",
+    },
+  ],
+  clients: [
+    "Great People",
+    "St. George",
+    "Clinic A",
+    "Conch Hospital",
+    "Varios Dental",
+    "VSH",
+    "Langham Place",
+    "Monnis",
+  ],
+  projects: [
+    {
+      title: "Great People Branemark Center",
+      meta: "Shanghai, China // Dental Center // 2019",
+      image: "/images/projects/great-people-shanghai-02.png",
+      alt: "Great People Shanghai dental center interior",
+      className: "project-card project-card-large",
+    },
+    {
+      title: "St. George Medical Center",
+      meta: "Hong Kong // Specialist Clinic // 2019",
+      image: "/images/projects/st-george-01.png",
+      alt: "Minimal medical reception and corridor with black structural details",
+      className: "project-card project-card-tall",
+    },
+    {
+      title: "Conch Hospital",
+      meta: "Anhui, China // Dental Department // 2019",
+      image: "/images/projects/conch-hospital.png",
+      alt: "Conch Hospital dental department interior",
+      className: "project-card project-card-square",
+    },
+    {
+      title: "Clinic A K11 TST",
+      meta: "Hong Kong // Dental Clinic // 2019",
+      image: "/images/projects/clinic-a.png",
+      alt: "Clinic A at K11 dental clinic interior",
+      className: "project-card project-card-wide",
+    },
+    {
+      title: "Clinic A Dental Section",
+      meta: "Hong Kong // Clinical Interior // 2019",
+      image: "/images/projects/clinic-a-03.png",
+      alt: "Clinic A dental section detail",
+      className: "project-card project-card-small",
+    },
+    {
+      title: "Langham Place Orthodontics",
+      meta: "Kowloon, Hong Kong // Orthodontics Centre // 2019",
+      image: "/images/projects/langham-place.png",
+      alt: "Langham Place orthodontics centre",
+      className: "project-card project-card-tall",
+    },
+    {
+      title: "Varios Dental Clinic",
+      meta: "Hong Kong // Dental Clinic",
+      image: "/images/projects/varios-dental.png",
+      alt: "Varios Dental Clinic interior",
+      className: "project-card project-card-small",
+    },
+    {
+      title: "VSH Wanchai MRI",
+      meta: "Hong Kong // Veterinary Hospital // MRI Suite",
+      image: "/images/projects/vsh-mri.png",
+      alt: "VSH Wanchai MRI suite interior",
+      className: "project-card project-card-tall",
+    },
+    {
+      title: "Monnis Restaurant",
+      meta: "Mongolia // Hospitality // 2016",
+      image: "/images/projects/monnis-restaurant.png",
+      alt: "Monnis Restaurant interior",
+      className: "project-card project-card-tall",
+    },
+    {
+      title: "Private Residence",
+      meta: "Residential // Interior Design",
+      image: "/images/projects/residential.png",
+      alt: "Private residence interior",
+      className: "project-card project-card-small",
+    },
+  ],
+};

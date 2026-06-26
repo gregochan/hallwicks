@@ -1,13 +1,9 @@
 "use client";
 
-import { useRef } from "react";
+import { useEffect, useRef } from "react";
 import Image from "next/image";
-import {
-  motion,
-  useReducedMotion,
-  useScroll,
-  useTransform,
-} from "motion/react";
+
+import { gsap, registerGsapPlugins } from "@/lib/animation/gsap";
 
 type Project = {
   title: string;
@@ -29,37 +25,68 @@ function ProjectCard({
   project: Project;
 }) {
   const cardRef = useRef<HTMLElement | null>(null);
-  const reduceMotion = useReducedMotion();
-  const { scrollYProgress } = useScroll({
-    target: cardRef,
-    offset: ["start end", "end start"],
-  });
-  const imageY = useTransform(scrollYProgress, [0, 1], [42, -34]);
-  const imageScale = useTransform(scrollYProgress, [0, 0.55, 1], [1.08, 1, 1.06]);
+
+  useEffect(() => {
+    const card = cardRef.current;
+    const image = card?.querySelector<HTMLElement>(".project-image-motion");
+
+    if (!card || !image) return undefined;
+
+    const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+    if (reduceMotion) return undefined;
+
+    registerGsapPlugins();
+
+    const context = gsap.context(() => {
+      gsap.fromTo(
+        card,
+        { autoAlpha: 0, y: 74 },
+        {
+          autoAlpha: 1,
+          delay: (index % 3) * 0.08,
+          duration: 0.78,
+          ease: "power3.out",
+          scrollTrigger: {
+            trigger: card,
+            start: "top 78%",
+            once: true,
+          },
+          y: 0,
+        },
+      );
+
+      gsap.fromTo(
+        image,
+        { scale: 1.08, yPercent: 7 },
+        {
+          ease: "none",
+          scale: 1.04,
+          scrollTrigger: {
+            end: "bottom top",
+            scrub: true,
+            start: "top bottom",
+            trigger: card,
+          },
+          yPercent: -7,
+        },
+      );
+    }, card);
+
+    return () => context.revert();
+  }, [index]);
 
   return (
-    <motion.article
+    <article
       className={project.className}
-      initial={reduceMotion ? false : { opacity: 0, y: 74 }}
       ref={cardRef}
-      transition={{
-        delay: (index % 3) * 0.08,
-        duration: 0.78,
-        ease: [0.16, 1, 0.3, 1],
-      }}
-      viewport={{ amount: 0.22 }}
-      whileInView={reduceMotion ? undefined : { opacity: 1, y: 0 }}
     >
       <div
         className="project-image-wrap protected-image"
         onContextMenu={blockImageMenu}
       >
-        <motion.div
+        <div
           className="project-image-motion"
-          style={{
-            scale: reduceMotion ? 1 : imageScale,
-            y: reduceMotion ? 0 : imageY,
-          }}
         >
           <Image
             src={project.image}
@@ -70,13 +97,13 @@ function ProjectCard({
             onDragStart={blockImageMenu}
             sizes="(max-width: 980px) 100vw, 66vw"
           />
-        </motion.div>
+        </div>
       </div>
       <div className="project-meta">
         <h3>{project.title}</h3>
         <p className="technical-label">{project.meta}</p>
       </div>
-    </motion.article>
+    </article>
   );
 }
 

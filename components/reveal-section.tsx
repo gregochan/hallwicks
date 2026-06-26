@@ -1,7 +1,8 @@
 "use client";
 
-import type { ComponentPropsWithoutRef, ReactNode } from "react";
-import { motion, useReducedMotion } from "motion/react";
+import { useEffect, useRef, type ComponentPropsWithoutRef, type ReactNode } from "react";
+
+import { gsap, registerGsapPlugins } from "@/lib/animation/gsap";
 
 type RevealSectionProps = ComponentPropsWithoutRef<"section"> & {
   children: ReactNode;
@@ -12,18 +13,51 @@ export function RevealSection({
   className,
   ...props
 }: RevealSectionProps) {
-  const reduceMotion = useReducedMotion();
+  const sectionRef = useRef<HTMLElement | null>(null);
+
+  useEffect(() => {
+    const section = sectionRef.current;
+    if (!section) return undefined;
+
+    const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+    if (reduceMotion) return undefined;
+
+    registerGsapPlugins();
+
+    const context = gsap.context(() => {
+      gsap.fromTo(
+        section,
+        {
+          autoAlpha: 0,
+          clipPath: "inset(0 0 10% 0)",
+          y: 56,
+        },
+        {
+          autoAlpha: 1,
+          clipPath: "inset(0 0 0% 0)",
+          duration: 0.92,
+          ease: "power3.out",
+          scrollTrigger: {
+            trigger: section,
+            start: "top 82%",
+            once: true,
+          },
+          y: 0,
+        },
+      );
+    }, section);
+
+    return () => context.revert();
+  }, []);
 
   return (
-    <motion.section
+    <section
       className={className}
-      initial={reduceMotion ? false : { opacity: 0, y: 56 }}
-      transition={{ duration: 0.72, ease: [0.16, 1, 0.3, 1] }}
-      viewport={{ amount: 0.18, once: true }}
-      whileInView={reduceMotion ? undefined : { opacity: 1, y: 0 }}
+      ref={sectionRef}
       {...props}
     >
       {children}
-    </motion.section>
+    </section>
   );
 }

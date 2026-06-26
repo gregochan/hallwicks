@@ -9,7 +9,6 @@ import {
   useId,
   useRef,
 } from "react";
-import { useAnimationFrame } from "motion/react";
 
 import { useMousePositionRef } from "@/hooks/use-mouse-position-ref";
 import { cn } from "@/lib/utils";
@@ -69,21 +68,31 @@ export default function Floating({
     elementsMap.current.delete(id);
   }, []);
 
-  useAnimationFrame(() => {
-    if (!containerRef.current || prefersReducedMotion.current) return;
+  useEffect(() => {
+    let frameId = 0;
 
-    elementsMap.current.forEach((data) => {
-      const strength = (data.depth * sensitivity) / 20;
-      const targetX = mousePositionRef.current.x * strength;
-      const targetY = mousePositionRef.current.y * strength;
-      const dx = targetX - data.currentPosition.x;
-      const dy = targetY - data.currentPosition.y;
+    const render = () => {
+      if (containerRef.current && !prefersReducedMotion.current) {
+        elementsMap.current.forEach((data) => {
+          const strength = (data.depth * sensitivity) / 20;
+          const targetX = mousePositionRef.current.x * strength;
+          const targetY = mousePositionRef.current.y * strength;
+          const dx = targetX - data.currentPosition.x;
+          const dy = targetY - data.currentPosition.y;
 
-      data.currentPosition.x += dx * easingFactor;
-      data.currentPosition.y += dy * easingFactor;
-      data.element.style.transform = `translate3d(${data.currentPosition.x}px, ${data.currentPosition.y}px, 0)`;
-    });
-  });
+          data.currentPosition.x += dx * easingFactor;
+          data.currentPosition.y += dy * easingFactor;
+          data.element.style.transform = `translate3d(${data.currentPosition.x}px, ${data.currentPosition.y}px, 0)`;
+        });
+      }
+
+      frameId = window.requestAnimationFrame(render);
+    };
+
+    frameId = window.requestAnimationFrame(render);
+
+    return () => window.cancelAnimationFrame(frameId);
+  }, [easingFactor, mousePositionRef, sensitivity]);
 
   return (
     <FloatingContext.Provider value={{ registerElement, unregisterElement }}>
