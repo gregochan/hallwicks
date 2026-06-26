@@ -3,10 +3,10 @@
 import { useState } from "react";
 
 const links = [
-  { href: "#story", label: "Story" },
-  { href: "#capabilities", label: "Capabilities" },
-  { href: "#works", label: "Works" },
-  { href: "#contact", label: "Contact" },
+  { href: "#story", desktopLabel: "Story", mobileLabel: "History" },
+  { href: "#capabilities", desktopLabel: "Capabilities", mobileLabel: "Services" },
+  { href: "#works", desktopLabel: "Works", mobileLabel: "Projects" },
+  { href: "#contact", desktopLabel: "Contact", mobileLabel: "Contact" },
 ];
 
 export function SiteHeader() {
@@ -23,7 +23,7 @@ export function SiteHeader() {
         <nav className="nav-links" aria-label="Section links">
           {links.map((link) => (
             <a href={link.href} key={link.href}>
-              {link.label}
+              {link.desktopLabel}
             </a>
           ))}
         </nav>
@@ -45,14 +45,21 @@ export function SiteHeader() {
       </header>
 
       <div className={open ? "mobile-menu mobile-menu-open" : "mobile-menu"} id="mobile-menu">
+        <div className="mobile-menu-head">
+          <a href="#top" onClick={close}>
+            Hallwicks
+          </a>
+        </div>
         <nav aria-label="Mobile navigation">
-          {links.map((link) => (
+          {links.map((link, index) => (
             <a href={link.href} key={link.href} onClick={close}>
-              {link.label}
+              <span>{link.mobileLabel}</span>
+              <span aria-hidden="true">{index < links.length - 1 ? "_" : ""}</span>
             </a>
           ))}
-          <a href="mailto:hallwicks@gmail.com" onClick={close}>
+          <a className="mobile-menu-inquiry" href="mailto:hallwicks@gmail.com" onClick={close}>
             Inquiry
+            <span aria-hidden="true">+</span>
           </a>
         </nav>
       </div>
