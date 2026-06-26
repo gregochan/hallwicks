@@ -24,15 +24,7 @@ export function SiteHeader() {
     <>
       <header className="top-nav" aria-label="Primary navigation" style={glassStyle}>
         <a className="nav-brand" href="#top" aria-label="Hallwicks home" onClick={close}>
-          <span>hallwicks</span>
-          <Image
-            alt=""
-            className="nav-brand-mark"
-            draggable={false}
-            height={31}
-            src="/images/brand/hallwicks-mark.png"
-            width={31}
-          />
+          HALLWICKS.
         </a>
         <nav className="nav-links" aria-label="Section links">
           {links.map((link) => (
@@ -56,9 +48,6 @@ export function SiteHeader() {
 
       <div className={open ? "mobile-menu mobile-menu-open" : "mobile-menu"} id="mobile-menu">
         <div className="mobile-menu-head">
-          <a href="#top" onClick={close}>
-            Hallwicks
-          </a>
           <button
             aria-label="Close menu"
             className="mobile-menu-close"
@@ -76,6 +65,9 @@ export function SiteHeader() {
             </a>
           ))}
         </nav>
+        <a className="mobile-menu-wordmark" href="#top" onClick={close}>
+          HALLWICKS.
+        </a>
         <Image
           alt=""
           className="mobile-menu-mark"

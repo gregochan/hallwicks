@@ -218,20 +218,8 @@ textarea {
   justify-self: start;
   position: relative;
   z-index: 2;
-  display: inline-flex;
   width: max-content;
-  align-items: center;
-  gap: 10px;
   opacity: var(--nav-brand-opacity, 0);
-}
-
-.nav-brand-mark {
-  width: 31px;
-  height: 31px;
-  object-fit: contain;
-  opacity: 0.82;
-  transform: translateY(-1px);
-  user-select: none;
 }
 
 .nav-links {
@@ -332,8 +320,10 @@ textarea {
   display: none;
   align-content: start;
   gap: clamp(80px, 12svh, 128px);
-  padding: 34px var(--page) 42px;
-  background: var(--green);
+  padding: 34px var(--page) clamp(210px, 28svh, 250px);
+  background:
+    linear-gradient(0deg, rgba(255, 255, 255, 0.98) 0%, rgba(255, 255, 255, 0.9) 14%, rgba(255, 255, 255, 0) 43%),
+    var(--green);
   opacity: 0;
   pointer-events: none;
   transform: translateY(-12px);
@@ -345,33 +335,34 @@ textarea {
 .mobile-menu-mark {
   position: absolute;
   right: var(--page);
-  bottom: 42px;
-  width: clamp(92px, 28vw, 148px);
+  bottom: clamp(22px, 5svh, 44px);
+  width: clamp(112px, 32vw, 168px);
   height: auto;
-  opacity: 0.7;
+  opacity: 0.86;
   user-select: none;
+}
+
+.mobile-menu-wordmark {
+  position: absolute;
+  left: var(--page);
+  bottom: clamp(32px, 6svh, 54px);
+  z-index: 1;
+  color: var(--ink);
+  font-family: var(--display);
+  font-size: clamp(54px, 14vw, 78px);
+  font-weight: 400;
+  line-height: 0.78;
+  text-transform: uppercase;
 }
 
 .mobile-menu-head {
   display: flex;
   align-items: flex-start;
-  justify-content: space-between;
+  justify-content: flex-end;
   gap: 24px;
 }
 
-.mobile-menu-head a {
-  display: block;
-  padding: 0;
-  border: 0;
-  color: var(--paper);
-  font-family: var(--display);
-  font-size: clamp(60px, 17vw, 86px);
-  font-weight: 400;
-  line-height: 0.85;
-  text-transform: uppercase;
-}
-
-.mobile-menu-head a::after {
+.mobile-menu-wordmark::after {
   content: none;
 }
 
