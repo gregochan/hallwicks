@@ -4,10 +4,10 @@ import { useState } from "react";
 import type { CSSProperties } from "react";
 
 const links = [
-  { href: "#story", desktopLabel: "Story", mobileLabel: "History" },
-  { href: "#capabilities", desktopLabel: "Capabilities", mobileLabel: "Services" },
-  { href: "#works", desktopLabel: "Works", mobileLabel: "Projects" },
-  { href: "#contact", desktopLabel: "Contact", mobileLabel: "Contact" },
+  { href: "#story", label: "Story" },
+  { href: "#capabilities", label: "Capabilities" },
+  { href: "#works", label: "Works" },
+  { href: "#contact", label: "Contact" },
 ];
 
 export function SiteHeader() {
@@ -28,7 +28,7 @@ export function SiteHeader() {
         <nav className="nav-links" aria-label="Section links">
           {links.map((link) => (
             <a href={link.href} key={link.href}>
-              {link.desktopLabel}
+              {link.label}
             </a>
           ))}
         </nav>
@@ -63,7 +63,7 @@ export function SiteHeader() {
         <nav aria-label="Mobile navigation">
           {links.map((link) => (
             <a href={link.href} key={link.href} onClick={close}>
-              <span>{link.mobileLabel}</span>
+              <span>{link.label}</span>
             </a>
           ))}
         </nav>

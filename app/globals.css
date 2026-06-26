@@ -384,7 +384,7 @@ textarea {
   font-size: clamp(42px, 11.4vw, 64px);
   font-weight: 800;
   line-height: 0.94;
-  text-transform: uppercase;
+  text-transform: none;
 }
 
 .mobile-menu nav a:first-child {
