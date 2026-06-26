@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import type { CSSProperties } from "react";
 
 const links = [
   { href: "#story", desktopLabel: "Story", mobileLabel: "History" },
@@ -13,10 +14,14 @@ export function SiteHeader() {
   const [open, setOpen] = useState(false);
 
   const close = () => setOpen(false);
+  const glassStyle = {
+    backdropFilter: "blur(24px) saturate(1.62)",
+    WebkitBackdropFilter: "blur(24px) saturate(1.62)",
+  } satisfies CSSProperties;
 
   return (
     <>
-      <header className="top-nav" aria-label="Primary navigation">
+      <header className="top-nav" aria-label="Primary navigation" style={glassStyle}>
         <a className="nav-brand" href="#top" aria-label="Hallwicks home" onClick={close}>
           hallwicks
         </a>
@@ -27,10 +32,6 @@ export function SiteHeader() {
             </a>
           ))}
         </nav>
-        <a className="nav-inquiry" href="mailto:hallwicks@gmail.com">
-          <span>Inquiry</span>
-          <span aria-hidden="true">+</span>
-        </a>
         <button
           aria-controls="mobile-menu"
           aria-expanded={open}
@@ -49,18 +50,22 @@ export function SiteHeader() {
           <a href="#top" onClick={close}>
             Hallwicks
           </a>
+          <button
+            aria-label="Close menu"
+            className="mobile-menu-close"
+            onClick={close}
+            type="button"
+          >
+            <span aria-hidden="true" />
+            <span aria-hidden="true" />
+          </button>
         </div>
         <nav aria-label="Mobile navigation">
-          {links.map((link, index) => (
+          {links.map((link) => (
             <a href={link.href} key={link.href} onClick={close}>
               <span>{link.mobileLabel}</span>
-              <span aria-hidden="true">{index < links.length - 1 ? "_" : ""}</span>
             </a>
           ))}
-          <a className="mobile-menu-inquiry" href="mailto:hallwicks@gmail.com" onClick={close}>
-            Inquiry
-            <span aria-hidden="true">+</span>
-          </a>
         </nav>
       </div>
     </>

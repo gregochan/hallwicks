@@ -68,8 +68,8 @@ export function HeroParallax() {
       const scale = 1 + (targetScale - 1) * eased;
       const x = target.left + (target.width - origin.width * targetScale) / 2 - origin.left;
       const y = target.top + (target.height - origin.height * targetScale) / 2 - origin.top;
-      const fade = progress > 0.94 ? Math.max(0, 1 - (progress - 0.94) / 0.06) : 1;
-      const brandFade = Math.max(0, Math.min(1, (progress - 0.92) / 0.08));
+      const fade = progress > 0.72 ? Math.max(0, 1 - (progress - 0.72) / 0.2) : 1;
+      const brandFade = Math.max(0, Math.min(1, (progress - 0.68) / 0.2));
 
       wordmark.style.transform = `translate3d(${x * eased}px, ${y * eased}px, 0) scale(${scale})`;
       wordmark.style.opacity = String(fade);
