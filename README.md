@@ -16,6 +16,7 @@ npm install
 npm run dev
 npm run lint
 npm run build
+npm run strapi:dev
 ```
 
 The project builds with `vinext` and the Sites Vite plugin. Deployment metadata
@@ -38,6 +39,7 @@ is a static brand site.
 - `components/`: page sections, header, galleries, icons, cursor, and utility UI
 - `lib/animation/`: GSAP plugin registration and animation exports
 - `lib/content/`: Strapi REST client, content types, and local fallback content
+- `backend/`: Strapi 5 backend for editable Featured Works
 - `public/images/`: local clinical-interior bitmap assets
 - `public/screenshot.jpeg`: canonical Sites preview image
 
@@ -52,3 +54,14 @@ STRAPI_API_TOKEN=optional-read-token
 
 Without those variables, the site uses `fallbackSiteContent`, so builds remain
 stable while the CMS model is being prepared.
+
+The Strapi backend lives in `backend/`. Run it with:
+
+```bash
+cp backend/.env.example backend/.env
+npm --prefix backend install
+npm run strapi:dev
+```
+
+Create and publish **Featured Work** entries in Strapi to update the site's
+Featured Works section.

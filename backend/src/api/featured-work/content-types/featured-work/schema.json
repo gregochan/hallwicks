@@ -1,0 +1,57 @@
+{
+  "kind": "collectionType",
+  "collectionName": "featured_works",
+  "info": {
+    "singularName": "featured-work",
+    "pluralName": "featured-works",
+    "displayName": "Featured Work",
+    "description": "Editable projects shown in the Hallwicks Featured Works section."
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "title": {
+      "type": "string",
+      "required": true
+    },
+    "meta": {
+      "type": "string",
+      "required": true
+    },
+    "image": {
+      "type": "media",
+      "multiple": false,
+      "required": false,
+      "allowedTypes": [
+        "images"
+      ]
+    },
+    "imageUrl": {
+      "type": "string",
+      "required": false
+    },
+    "alt": {
+      "type": "string",
+      "required": true
+    },
+    "layout": {
+      "type": "enumeration",
+      "enum": [
+        "large",
+        "tall",
+        "square",
+        "wide",
+        "small"
+      ],
+      "default": "small",
+      "required": true
+    },
+    "order": {
+      "type": "integer",
+      "default": 0,
+      "required": true
+    }
+  }
+}

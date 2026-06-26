@@ -1,0 +1,10 @@
+.cache/
+.strapi/
+.strapi-updater.json
+.tmp/
+build/
+dist/
+node_modules/
+public/uploads/
+types/generated/
+.env
