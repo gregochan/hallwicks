@@ -27,7 +27,7 @@ if (is_admin_logged_in()) {
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Hallwicks Admin Login</title>
-  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="/backend/admin/styles.css?v=20260627">
 </head>
 <body class="auth-page">
   <main class="auth-card">

@@ -38,7 +38,7 @@ $works = db()->query(
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Featured Works | Hallwicks Admin</title>
-  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="/backend/admin/styles.css?v=20260627">
 </head>
 <body>
   <header class="topbar">
@@ -61,6 +61,13 @@ $works = db()->query(
       <input type="hidden" name="csrf_token" value="<?= htmlspecialchars(csrf_token()) ?>">
       <input type="hidden" name="action" value="order">
       <div class="work-list">
+        <?php if (!$works): ?>
+          <div class="empty-state">
+            <h2>No projects yet</h2>
+            <p>Add your first featured work to test the API and image upload flow.</p>
+            <a class="button" href="work-edit.php">Add work</a>
+          </div>
+        <?php endif; ?>
         <?php foreach ($works as $work): ?>
           <article class="work-row">
             <img src="<?= htmlspecialchars($work['image_url']) ?>" alt="">

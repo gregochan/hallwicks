@@ -111,7 +111,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title><?= $id ? 'Edit' : 'Add' ?> Featured Work | Hallwicks Admin</title>
-  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="/backend/admin/styles.css?v=20260627">
 </head>
 <body>
   <header class="topbar">
