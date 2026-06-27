@@ -9,7 +9,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     if (verify_admin_login(trim($_POST['username'] ?? ''), $_POST['password'] ?? '')) {
         login_admin();
-        header('Location: /admin/works.php');
+        header('Location: works.php');
         exit;
     }
 
@@ -17,7 +17,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 }
 
 if (is_admin_logged_in()) {
-    header('Location: /admin/works.php');
+    header('Location: works.php');
     exit;
 }
 ?>
@@ -27,7 +27,7 @@ if (is_admin_logged_in()) {
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Hallwicks Admin Login</title>
-  <link rel="stylesheet" href="/admin/styles.css">
+  <link rel="stylesheet" href="styles.css">
 </head>
 <body class="auth-page">
   <main class="auth-card">

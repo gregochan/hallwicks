@@ -8,7 +8,7 @@ require_admin();
 $id = (int) ($_GET['id'] ?? 0);
 
 if (!$id) {
-    header('Location: /admin/works.php');
+    header('Location: works.php');
     exit;
 }
 
@@ -24,7 +24,7 @@ if (!$work) {
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     require_csrf();
     db()->prepare('DELETE FROM featured_works WHERE id = ?')->execute([$id]);
-    header('Location: /admin/works.php');
+    header('Location: works.php');
     exit;
 }
 ?>
@@ -34,7 +34,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Delete Featured Work | Hallwicks Admin</title>
-  <link rel="stylesheet" href="/admin/styles.css">
+  <link rel="stylesheet" href="styles.css">
 </head>
 <body>
   <main class="auth-card">
@@ -43,7 +43,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <form method="post">
       <input type="hidden" name="csrf_token" value="<?= htmlspecialchars(csrf_token()) ?>">
       <button class="danger-button" type="submit">Delete permanently</button>
-      <a href="/admin/works.php">Cancel</a>
+      <a href="works.php">Cancel</a>
     </form>
   </main>
 </body>

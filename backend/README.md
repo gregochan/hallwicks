@@ -8,12 +8,12 @@ Featured Works section.
 Upload the contents of `backend/` to the PHP host so these paths exist:
 
 ```text
-/admin/login.php
-/admin/works.php
-/api/featured-works.php
-/api/featured-works-create.php
-/uploads/works/public/
-/uploads/works/original-private/
+/backend/admin/login.php
+/backend/admin/works.php
+/backend/api/featured-works.php
+/backend/api/featured-works-create.php
+/backend/uploads/works/public/
+/backend/uploads/works/original-private/
 ```
 
 ## Install
@@ -42,7 +42,7 @@ uploads/works/original-private/
 Open:
 
 ```text
-/admin/login.php
+/backend/admin/login.php
 ```
 
 You can add/edit Featured Works, upload images, choose layout, set order, and
@@ -53,7 +53,7 @@ publish/unpublish entries.
 The frontend reads:
 
 ```text
-GET /api/featured-works.php
+GET /backend/api/featured-works.php
 ```
 
 Response shape:
@@ -66,7 +66,7 @@ Response shape:
       "title": "Great People Branemark Center",
       "meta": "Shanghai, China // Dental Center // 2019",
       "description": "Specialist dental center interior.",
-      "image": "/uploads/works/public/great-people.webp",
+      "image": "/backend/uploads/works/public/great-people.webp",
       "alt": "Great People Shanghai dental center interior",
       "layout": "large",
       "className": "project-card project-card-large"
@@ -91,7 +91,7 @@ private original folder on Apache-compatible hosts.
 
 ## Future Bot Endpoint
 
-`POST /api/featured-works-create.php` accepts a multipart image upload and fields:
+`POST /backend/api/featured-works-create.php` accepts a multipart image upload and fields:
 
 - `title`
 - `meta`
@@ -104,4 +104,4 @@ private original folder on Apache-compatible hosts.
 - `api_token`, or send token as `X-API-Token`
 
 Recommended bot behavior: create entries as drafts with `published=0`, then
-review and publish from `/admin/works.php`.
+review and publish from `/backend/admin/works.php`.

@@ -22,7 +22,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
     }
 
-    header('Location: /admin/works.php');
+    header('Location: works.php');
     exit;
 }
 
@@ -38,14 +38,14 @@ $works = db()->query(
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Featured Works | Hallwicks Admin</title>
-  <link rel="stylesheet" href="/admin/styles.css">
+  <link rel="stylesheet" href="styles.css">
 </head>
 <body>
   <header class="topbar">
-    <a href="/admin/works.php" class="brand">Hallwicks</a>
+    <a href="works.php" class="brand">Hallwicks</a>
     <nav>
-      <a href="/admin/work-edit.php">Add work</a>
-      <a href="/admin/logout.php">Logout</a>
+      <a href="work-edit.php">Add work</a>
+      <a href="logout.php">Logout</a>
     </nav>
   </header>
   <main class="shell">
@@ -54,7 +54,7 @@ $works = db()->query(
         <p class="eyebrow">Featured Works</p>
         <h1>Project editor</h1>
       </div>
-      <a class="button" href="/admin/work-edit.php">Add work</a>
+      <a class="button" href="work-edit.php">Add work</a>
     </div>
 
     <form method="post" class="table-form">
@@ -74,11 +74,11 @@ $works = db()->query(
               <input type="number" name="order[<?= (int) $work['id'] ?>]" value="<?= (int) $work['display_order'] ?>">
             </label>
             <div class="actions">
-              <a href="/admin/work-edit.php?id=<?= (int) $work['id'] ?>">Edit</a>
-              <button type="submit" formaction="/admin/works.php" name="toggle_id" value="<?= (int) $work['id'] ?>" onclick="this.form.elements.action.value='toggle'">
+              <a href="work-edit.php?id=<?= (int) $work['id'] ?>">Edit</a>
+              <button type="submit" formaction="works.php" name="toggle_id" value="<?= (int) $work['id'] ?>" onclick="this.form.elements.action.value='toggle'">
                 <?= $work['published'] ? 'Unpublish' : 'Publish' ?>
               </button>
-              <a class="danger" href="/admin/work-delete.php?id=<?= (int) $work['id'] ?>">Delete</a>
+              <a class="danger" href="work-delete.php?id=<?= (int) $work['id'] ?>">Delete</a>
             </div>
           </article>
         <?php endforeach; ?>

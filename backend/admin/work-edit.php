@@ -98,7 +98,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             ]);
         }
 
-        header('Location: /admin/works.php');
+        header('Location: works.php');
         exit;
     } catch (Throwable $exception) {
         $error = $exception->getMessage();
@@ -111,14 +111,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title><?= $id ? 'Edit' : 'Add' ?> Featured Work | Hallwicks Admin</title>
-  <link rel="stylesheet" href="/admin/styles.css">
+  <link rel="stylesheet" href="styles.css">
 </head>
 <body>
   <header class="topbar">
-    <a href="/admin/works.php" class="brand">Hallwicks</a>
+    <a href="works.php" class="brand">Hallwicks</a>
     <nav>
-      <a href="/admin/works.php">Works</a>
-      <a href="/admin/logout.php">Logout</a>
+      <a href="works.php">Works</a>
+      <a href="logout.php">Logout</a>
     </nav>
   </header>
   <main class="shell narrow">
@@ -178,7 +178,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       <?php endif; ?>
       <div class="form-actions">
         <button type="submit">Save work</button>
-        <a href="/admin/works.php">Cancel</a>
+        <a href="works.php">Cancel</a>
       </div>
     </form>
   </main>

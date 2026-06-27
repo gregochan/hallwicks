@@ -22,7 +22,7 @@ return [
     'paths' => [
         'public_upload_dir' => __DIR__ . '/uploads/works/public',
         'private_upload_dir' => __DIR__ . '/uploads/works/original-private',
-        'public_upload_url' => '/uploads/works/public',
+        'public_upload_url' => '/backend/uploads/works/public',
     ],
     'images' => [
         'max_upload_bytes' => 12 * 1024 * 1024,
