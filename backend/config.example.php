@@ -21,7 +21,6 @@ return [
     ],
     'paths' => [
         'public_upload_dir' => __DIR__ . '/uploads/works/public',
-        'private_upload_dir' => __DIR__ . '/uploads/works/original-private',
         'public_upload_url' => '/backend/uploads/works/public',
     ],
     'images' => [

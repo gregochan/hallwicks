@@ -5,11 +5,10 @@ require_once __DIR__ . '/config.php';
 function ensure_upload_dirs(): void
 {
     $paths = app_config()['paths'];
+    $dir = $paths['public_upload_dir'];
 
-    foreach ([$paths['public_upload_dir'], $paths['private_upload_dir']] as $dir) {
-        if (!is_dir($dir) && !mkdir($dir, 0755, true)) {
-            throw new RuntimeException('Unable to create upload directory.');
-        }
+    if (!is_dir($dir) && !mkdir($dir, 0755, true)) {
+        throw new RuntimeException('Unable to create upload directory.');
     }
 }
 
@@ -46,17 +45,17 @@ function process_featured_work_image(array $file, string $title): string
 
     $config = app_config();
     $base = slug_part($title) . '-' . bin2hex(random_bytes(6));
-    $privatePath = $config['paths']['private_upload_dir'] . '/' . $base . '-source';
     $publicPath = $config['paths']['public_upload_dir'] . '/' . $base . '.webp';
-
-    if (!move_uploaded_file($file['tmp_name'], $privatePath)) {
-        throw new RuntimeException('Unable to store uploaded image.');
-    }
+    $sourcePath = $file['tmp_name'];
 
     if (extension_loaded('imagick')) {
-        image_to_webp_with_imagick($privatePath, $publicPath);
+        image_to_webp_with_imagick($sourcePath, $publicPath);
     } else {
-        image_to_webp_with_gd($privatePath, $publicPath);
+        image_to_webp_with_gd($sourcePath, $publicPath);
+    }
+
+    if (!is_file($publicPath)) {
+        throw new RuntimeException('Unable to create WebP image.');
     }
 
     return rtrim($config['paths']['public_upload_url'], '/') . '/' . basename($publicPath);

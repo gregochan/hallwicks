@@ -13,7 +13,6 @@ Upload the contents of `backend/` to the PHP host so these paths exist:
 /backend/api/featured-works.php
 /backend/api/featured-works-create.php
 /backend/uploads/works/public/
-/backend/uploads/works/original-private/
 ```
 
 ## Install
@@ -34,7 +33,6 @@ php -r "echo password_hash('your-password', PASSWORD_DEFAULT) . PHP_EOL;"
 
 ```text
 uploads/works/public/
-uploads/works/original-private/
 ```
 
 ## Admin Editor
@@ -83,11 +81,10 @@ Uploads are processed server-side:
 - resize to max 1800px wide
 - convert to WebP
 - apply subtle `HALLWICKS` watermark
-- store original upload in `uploads/works/original-private/`
 - serve only `uploads/works/public/*.webp`
+- discard the temporary original upload after conversion
 
-The `.htaccess` files block directory listing and deny direct access to the
-private original folder on Apache-compatible hosts.
+The `.htaccess` files block directory listing on Apache-compatible hosts.
 
 ## Future Bot Endpoint
 
