@@ -12,7 +12,47 @@ $stmt = db()->query(
      ORDER BY display_order ASC, title ASC"
 );
 
-$works = array_map(static function (array $row): array {
+$rows = $stmt->fetchAll();
+$workIds = array_map(static fn (array $row): int => (int) $row['id'], $rows);
+$imagesByWork = [];
+
+if ($workIds) {
+    try {
+        $placeholders = implode(',', array_fill(0, count($workIds), '?'));
+        $imageStmt = db()->prepare(
+            "SELECT id, work_id, image_url, alt, display_order, is_cover
+             FROM featured_work_images
+             WHERE work_id IN ($placeholders)
+             ORDER BY is_cover DESC, display_order ASC, id ASC"
+        );
+        $imageStmt->execute($workIds);
+
+        foreach ($imageStmt->fetchAll() as $image) {
+            $workId = (int) $image['work_id'];
+            $imagesByWork[$workId][] = [
+                'id' => (int) $image['id'],
+                'image' => $image['image_url'],
+                'alt' => $image['alt'],
+                'isCover' => (bool) $image['is_cover'],
+            ];
+        }
+    } catch (Throwable) {
+        $imagesByWork = [];
+    }
+}
+
+$works = array_map(static function (array $row) use ($imagesByWork): array {
+    $images = $imagesByWork[(int) $row['id']] ?? [];
+
+    if (!$images) {
+        $images = [[
+            'id' => 0,
+            'image' => $row['image_url'],
+            'alt' => $row['alt'],
+            'isCover' => true,
+        ]];
+    }
+
     return [
         'id' => (int) $row['id'],
         'title' => $row['title'],
@@ -22,7 +62,8 @@ $works = array_map(static function (array $row): array {
         'alt' => $row['alt'],
         'layout' => $row['layout'],
         'className' => 'project-card project-card-' . $row['layout'],
+        'images' => $images,
     ];
-}, $stmt->fetchAll());
+}, $rows);
 
 send_json(['data' => $works]);

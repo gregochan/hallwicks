@@ -179,6 +179,49 @@ button:hover, .button:hover { background: var(--green); border-color: var(--gree
 
 .narrow { max-width: 780px; }
 
+.editor-panel {
+  display: grid;
+  gap: 18px;
+  border: 1px solid var(--line);
+  background: var(--surface);
+  padding: 20px;
+}
+
+.editor-panel h2 {
+  margin: 0;
+  font-size: 24px;
+}
+
+.image-editor-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+  gap: 14px;
+}
+
+.image-editor-card {
+  display: grid;
+  gap: 12px;
+  border: 1px solid var(--line);
+  padding: 12px;
+}
+
+.image-editor-card img {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  background: #eee;
+}
+
+.radio-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.radio-row input {
+  width: auto;
+}
+
 .form-grid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -198,6 +241,7 @@ label {
 }
 
 .checkbox input { width: auto; }
+input[type="range"] { padding: 0; }
 .preview { width: min(420px, 100%); border: 1px solid var(--line); }
 
 .notice {

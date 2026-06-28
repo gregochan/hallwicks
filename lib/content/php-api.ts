@@ -10,6 +10,10 @@ type PhpFeaturedWork = {
   className?: string | null;
   description?: string | null;
   image?: string | null;
+  images?: {
+    alt?: string | null;
+    image?: string | null;
+  }[] | null;
   layout?: string | null;
   meta?: string | null;
   title?: string | null;
@@ -33,11 +37,23 @@ function normalizeFeaturedWork(work: PhpFeaturedWork): Project | null {
   if (!work.title || !work.meta || !work.image || !work.alt) return null;
 
   const layout = work.layout || "small";
+  const images = work.images
+    ?.map((image) => {
+      if (!image.image) return null;
+
+      return {
+        alt: image.alt || work.alt || work.title || "Hallwicks project image",
+        image: resolveAssetUrl(image.image),
+      };
+    })
+    .filter((image): image is { alt: string; image: string } => Boolean(image));
 
   return {
     alt: work.alt,
     className: work.className || `project-card project-card-${layout}`,
+    description: work.description || undefined,
     image: resolveAssetUrl(work.image),
+    images: images?.length ? images : undefined,
     meta: work.meta,
     title: work.title,
   };

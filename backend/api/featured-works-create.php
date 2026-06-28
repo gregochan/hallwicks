@@ -22,6 +22,7 @@ $layout = $_POST['layout'] ?? 'small';
 $order = (int) ($_POST['display_order'] ?? 0);
 $published = (int) ($_POST['published'] ?? 0);
 $source = $_POST['source'] ?? 'api';
+$coverIndex = max(0, (int) ($_POST['cover_index'] ?? 0));
 $validLayouts = ['large', 'tall', 'square', 'wide', 'small'];
 $validSources = ['admin', 'telegram', 'whatsapp', 'api'];
 
@@ -38,11 +39,28 @@ if (!in_array($source, $validSources, true)) {
 }
 
 try {
-    if (empty($_FILES['image'])) {
+    $uploads = [];
+
+    if (!empty($_FILES['images'])) {
+        $uploads = uploaded_files_from_field($_FILES['images']);
+    }
+
+    if (!$uploads && !empty($_FILES['image'])) {
+        $uploads = uploaded_files_from_field($_FILES['image']);
+    }
+
+    if (!$uploads) {
         send_json(['error' => 'Image is required'], 422);
     }
 
-    $imageUrl = process_featured_work_image($_FILES['image'], $title);
+    $imageUrls = [];
+
+    foreach ($uploads as $index => $upload) {
+        $imageUrls[] = process_featured_work_image($upload, $title, $_POST);
+    }
+
+    $coverIndex = min($coverIndex, count($imageUrls) - 1);
+    $imageUrl = $imageUrls[$coverIndex];
 
     $stmt = db()->prepare(
         "INSERT INTO featured_works
@@ -63,7 +81,30 @@ try {
         ':source' => $source,
     ]);
 
-    send_json(['data' => ['id' => (int) db()->lastInsertId(), 'image' => $imageUrl]], 201);
+    $workId = (int) db()->lastInsertId();
+
+    try {
+        $imageStmt = db()->prepare(
+            "INSERT INTO featured_work_images
+             (work_id, image_url, alt, display_order, is_cover)
+             VALUES
+             (:work_id, :image_url, :alt, :display_order, :is_cover)"
+        );
+
+        foreach ($imageUrls as $index => $url) {
+            $imageStmt->execute([
+                ':work_id' => $workId,
+                ':image_url' => $url,
+                ':alt' => $alt,
+                ':display_order' => $index,
+                ':is_cover' => $index === $coverIndex ? 1 : 0,
+            ]);
+        }
+    } catch (Throwable) {
+        // Gallery table may not exist until the migration is imported.
+    }
+
+    send_json(['data' => ['id' => $workId, 'image' => $imageUrl, 'images' => $imageUrls]], 201);
 } catch (Throwable $error) {
     send_json(['error' => $error->getMessage()], 500);
 }

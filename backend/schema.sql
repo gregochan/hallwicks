@@ -13,3 +13,17 @@ CREATE TABLE IF NOT EXISTS featured_works (
   updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   INDEX idx_featured_works_public (published, display_order, title)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+CREATE TABLE IF NOT EXISTS featured_work_images (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  work_id INT NOT NULL,
+  image_url VARCHAR(500) NOT NULL,
+  alt VARCHAR(255) NOT NULL,
+  display_order INT NOT NULL DEFAULT 0,
+  is_cover TINYINT(1) NOT NULL DEFAULT 0,
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  INDEX idx_featured_work_images_work (work_id, display_order, id),
+  CONSTRAINT fk_featured_work_images_work
+    FOREIGN KEY (work_id) REFERENCES featured_works(id)
+    ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;

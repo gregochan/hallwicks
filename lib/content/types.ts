@@ -17,6 +17,11 @@ export type Project = {
   image: string;
   alt: string;
   className: string;
+  description?: string;
+  images?: {
+    alt: string;
+    image: string;
+  }[];
 };
 
 export type SiteContent = {

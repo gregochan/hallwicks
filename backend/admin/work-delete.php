@@ -2,6 +2,7 @@
 
 require_once __DIR__ . '/../includes/auth.php';
 require_once __DIR__ . '/../includes/db.php';
+require_once __DIR__ . '/../includes/image.php';
 
 require_admin();
 
@@ -23,6 +24,29 @@ if (!$work) {
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     require_csrf();
+    $urlsToDelete = [];
+
+    try {
+        $imageStmt = db()->prepare('SELECT image_url FROM featured_work_images WHERE work_id = ?');
+        $imageStmt->execute([$id]);
+
+        foreach ($imageStmt->fetchAll() as $image) {
+            $urlsToDelete[] = $image['image_url'];
+        }
+    } catch (Throwable) {}
+
+    $fallbackStmt = db()->prepare('SELECT image_url FROM featured_works WHERE id = ?');
+    $fallbackStmt->execute([$id]);
+    $fallback = $fallbackStmt->fetch();
+
+    if ($fallback) {
+        $urlsToDelete[] = $fallback['image_url'];
+    }
+
+    foreach (array_unique($urlsToDelete) as $url) {
+        delete_public_work_image($url);
+    }
+
     db()->prepare('DELETE FROM featured_works WHERE id = ?')->execute([$id]);
     header('Location: works.php');
     exit;
@@ -34,7 +58,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Delete Featured Work | Hallwicks Admin</title>
-  <link rel="stylesheet" href="/backend/admin/styles.css?v=20260627">
+  <link rel="stylesheet" href="/backend/admin/styles.css?v=20260628">
 </head>
 <body>
   <main class="auth-card">

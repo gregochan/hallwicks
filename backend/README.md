@@ -46,6 +46,17 @@ Open:
 You can add/edit Featured Works, upload images, choose layout, set order, and
 publish/unpublish entries.
 
+## Gallery Migration
+
+Existing installs created before gallery support should import:
+
+```text
+migrations/2026-06-28-featured-work-gallery.sql
+```
+
+This creates `featured_work_images` and copies each existing project cover into
+the gallery table as the first cover image.
+
 ## Public API
 
 The frontend reads:
@@ -81,6 +92,7 @@ Uploads are processed server-side:
 - resize to max 1800px wide
 - convert to WebP
 - apply subtle `HALLWICKS` watermark
+- optional crop preset, alignment, rotate, brightness, contrast, and saturation
 - serve only `uploads/works/public/*.webp`
 - discard the temporary original upload after conversion
 
@@ -98,6 +110,9 @@ The `.htaccess` files block directory listing on Apache-compatible hosts.
 - `display_order`
 - `published`
 - `source`
+- `cover_index`
+- `images[]` for multiple files, or `image` for the legacy single-file field
+- optional image processing fields: `crop`, `align_x`, `align_y`, `rotate`, `brightness`, `contrast`, `saturation`
 - `api_token`, or send token as `X-API-Token`
 
 Recommended bot behavior: create entries as drafts with `published=0`, then

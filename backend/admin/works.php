@@ -38,7 +38,7 @@ $works = db()->query(
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Featured Works | Hallwicks Admin</title>
-  <link rel="stylesheet" href="/backend/admin/styles.css?v=20260627">
+  <link rel="stylesheet" href="/backend/admin/styles.css?v=20260628">
 </head>
 <body>
   <header class="topbar">
