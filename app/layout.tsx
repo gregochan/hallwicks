@@ -7,8 +7,14 @@ export const metadata: Metadata = {
   description:
     "Hallwicks Design Limited creates precise medical, dental, and veterinary interiors across Hong Kong, China, and Singapore.",
   icons: {
-    icon: "/favicon.svg",
-    shortcut: "/favicon.svg",
+    icon: [
+      {
+        url: "/images/brand/hallwicks-mark.png",
+        type: "image/png",
+      },
+    ],
+    shortcut: "/images/brand/hallwicks-mark.png",
+    apple: "/images/brand/hallwicks-mark.png",
   },
 };
 
