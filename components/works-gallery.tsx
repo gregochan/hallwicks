@@ -4,7 +4,7 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 
 import { useLanguage } from "@/components/language-provider";
-import { gsap, registerGsapPlugins } from "@/lib/animation/gsap";
+import { gsap, registerGsapPlugins, ScrollTrigger } from "@/lib/animation/gsap";
 
 type Project = {
   title: string;
@@ -185,6 +185,20 @@ export function WorksGallery({ projects }: { projects: Project[] }) {
   }, [activeProject]);
 
   useEffect(() => {
+    if (!mounted) return undefined;
+
+    registerGsapPlugins();
+
+    const refreshFrame = window.requestAnimationFrame(() => {
+      ScrollTrigger.refresh();
+    });
+
+    return () => {
+      window.cancelAnimationFrame(refreshFrame);
+    };
+  }, [mounted, visibleProjects.length]);
+
+  useEffect(() => {
     window.queueMicrotask(() => {
       setMounted(true);
     });
@@ -229,12 +243,6 @@ export function WorksGallery({ projects }: { projects: Project[] }) {
   const selectFilter = (filter: string) => {
     setActiveFilter(filter);
     closeProject();
-
-    if (window.matchMedia("(max-width: 640px)").matches) {
-      window.requestAnimationFrame(() => {
-        document.getElementById("works")?.scrollIntoView({ block: "start", behavior: "smooth" });
-      });
-    }
   };
 
   return (

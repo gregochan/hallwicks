@@ -20,8 +20,9 @@ export function RevealSection({
     if (!section) return undefined;
 
     const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const compactViewport = window.matchMedia("(max-width: 640px)").matches;
 
-    if (reduceMotion) return undefined;
+    if (reduceMotion || compactViewport) return undefined;
 
     registerGsapPlugins();
 
