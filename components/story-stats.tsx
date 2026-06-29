@@ -2,8 +2,9 @@
 
 import { useEffect, useRef, useState } from "react";
 
+import { useLanguage } from "@/components/language-provider";
+
 const ESTABLISHED_YEAR = 1987;
-const REGIONS = "HK.China.SG";
 
 function useInView<T extends HTMLElement>() {
   const ref = useRef<T | null>(null);
@@ -31,7 +32,7 @@ function useInView<T extends HTMLElement>() {
   return { ref, inView };
 }
 
-function AnimatedYears({ play }: { play: boolean }) {
+function AnimatedYears({ play, suffix }: { play: boolean; suffix: string }) {
   const target = new Date().getFullYear() - ESTABLISHED_YEAR;
   const [value, setValue] = useState(0);
 
@@ -58,10 +59,10 @@ function AnimatedYears({ play }: { play: boolean }) {
     return () => window.cancelAnimationFrame(animationFrame);
   }, [play, target]);
 
-  return <strong>{value} yrs</strong>;
+  return <strong>{value} {suffix}</strong>;
 }
 
-function AnimatedRegions({ play }: { play: boolean }) {
+function AnimatedRegions({ play, regions }: { play: boolean; regions: string }) {
   const [value, setValue] = useState("");
 
   useEffect(() => {
@@ -70,35 +71,40 @@ function AnimatedRegions({ play }: { play: boolean }) {
     let index = 0;
     const timer = window.setInterval(() => {
       index += 1;
-      setValue(REGIONS.slice(0, index));
+      setValue(regions.slice(0, index));
 
-      if (index >= REGIONS.length) {
+      if (index >= regions.length) {
         window.clearInterval(timer);
       }
     }, 64);
 
     return () => window.clearInterval(timer);
-  }, [play]);
+  }, [play, regions]);
 
   return <strong>{value || "..."}</strong>;
 }
 
 export function StoryStats() {
   const { ref, inView } = useInView<HTMLElement>();
+  const { t } = useLanguage();
 
   return (
     <aside className="stats-panel" aria-label="Hallwicks facts" ref={ref}>
       <div>
-        <span className="technical-label">Founded</span>
+        <span className="technical-label">{t.story.stats.founded}</span>
         <strong>1987</strong>
       </div>
       <div>
-        <span className="technical-label">Experience</span>
-        <AnimatedYears play={inView} />
+        <span className="technical-label">{t.story.stats.experience}</span>
+        <AnimatedYears play={inView} suffix={t.story.stats.yearSuffix} />
       </div>
       <div>
-        <span className="technical-label">Regions</span>
-        <AnimatedRegions play={inView} />
+        <span className="technical-label">{t.story.stats.regions}</span>
+        <AnimatedRegions
+          key={t.story.stats.regionText}
+          play={inView}
+          regions={t.story.stats.regionText}
+        />
       </div>
     </aside>
   );

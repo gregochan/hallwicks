@@ -24,9 +24,16 @@ export type Project = {
   }[];
 };
 
+export type Client = {
+  name: string;
+  image?: string;
+  alt?: string;
+  logoSize?: "mark" | "wide";
+};
+
 export type SiteContent = {
   capabilities: Capability[];
   environments: Environment[];
-  clients: string[];
+  clients: Client[];
   projects: Project[];
 };

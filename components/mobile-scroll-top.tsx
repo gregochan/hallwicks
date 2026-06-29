@@ -2,8 +2,11 @@
 
 import { useEffect, useState } from "react";
 
+import { useLanguage } from "@/components/language-provider";
+
 export function MobileScrollTop() {
   const [visible, setVisible] = useState(false);
+  const { t } = useLanguage();
 
   useEffect(() => {
     const update = () => setVisible(window.scrollY > window.innerHeight * 0.35);
@@ -20,7 +23,7 @@ export function MobileScrollTop() {
 
   return (
     <a
-      aria-label="Scroll to top"
+      aria-label={t.scrollTop}
       className={visible ? "scroll-top scroll-top-visible" : "scroll-top"}
       href="#top"
     >

@@ -2,7 +2,9 @@
 
 import { useEffect, useMemo, useRef, useState } from "react";
 import Image from "next/image";
+import { createPortal } from "react-dom";
 
+import { useLanguage } from "@/components/language-provider";
 import { gsap, registerGsapPlugins } from "@/lib/animation/gsap";
 
 type Project = {
@@ -26,10 +28,14 @@ function ProjectCard({
   index,
   onOpen,
   project,
+  viewGallery,
+  openGallery,
 }: {
   index: number;
   onOpen: () => void;
   project: Project;
+  viewGallery: string;
+  openGallery: string;
 }) {
   const cardRef = useRef<HTMLElement | null>(null);
 
@@ -89,12 +95,12 @@ function ProjectCard({
       ref={cardRef}
     >
       <button
-        aria-label={`Open gallery for ${project.title}`}
+        aria-label={`${openGallery} ${project.title}`}
         className="project-gallery-trigger"
         onClick={onOpen}
         type="button"
       >
-        <span className="project-gallery-trigger-text">View gallery</span>
+        <span className="project-gallery-trigger-text">{viewGallery}</span>
       </button>
       <div
         className="project-image-wrap protected-image"
@@ -123,8 +129,10 @@ function ProjectCard({
 }
 
 export function WorksGallery({ projects }: { projects: Project[] }) {
+  const { t } = useLanguage();
   const [activeProjectIndex, setActiveProjectIndex] = useState<number | null>(null);
   const [activeImageIndex, setActiveImageIndex] = useState(0);
+  const [mounted, setMounted] = useState(false);
   const activeProject = activeProjectIndex === null ? null : projects[activeProjectIndex];
   const activeImages = useMemo(() => {
     if (!activeProject) return [];
@@ -133,6 +141,12 @@ export function WorksGallery({ projects }: { projects: Project[] }) {
       ? activeProject.images
       : [{ alt: activeProject.alt, image: activeProject.image }];
   }, [activeProject]);
+
+  useEffect(() => {
+    window.queueMicrotask(() => {
+      setMounted(true);
+    });
+  }, []);
 
   useEffect(() => {
     if (!activeProject) return undefined;
@@ -179,11 +193,13 @@ export function WorksGallery({ projects }: { projects: Project[] }) {
             key={project.title}
             onOpen={() => openProject(index)}
             project={project}
+            openGallery={t.works.openGallery}
+            viewGallery={t.works.viewGallery}
           />
         ))}
       </div>
 
-      {activeProject ? (
+      {mounted && activeProject ? createPortal(
         <div
           aria-modal="true"
           className="project-lightbox"
@@ -191,12 +207,12 @@ export function WorksGallery({ projects }: { projects: Project[] }) {
           role="dialog"
         >
           <button
-            aria-label="Close gallery"
+            aria-label={t.works.closeGallery}
             className="project-lightbox-close"
             onClick={closeProject}
             type="button"
           >
-            Close
+            {t.works.closeGallery}
           </button>
           <div className="project-lightbox-panel" onClick={(event) => event.stopPropagation()}>
             <div className="project-lightbox-media protected-image" onContextMenu={blockImageMenu}>
@@ -222,7 +238,7 @@ export function WorksGallery({ projects }: { projects: Project[] }) {
                   onClick={() => setActiveImageIndex((value) => (value - 1 + activeImages.length) % activeImages.length)}
                   type="button"
                 >
-                  Prev
+                  {t.works.previous}
                 </button>
                 <span>{activeImageIndex + 1} / {activeImages.length}</span>
                 <button
@@ -230,14 +246,14 @@ export function WorksGallery({ projects }: { projects: Project[] }) {
                   onClick={() => setActiveImageIndex((value) => (value + 1) % activeImages.length)}
                   type="button"
                 >
-                  Next
+                  {t.works.next}
                 </button>
               </div>
               {activeImages.length > 1 ? (
                 <div className="project-lightbox-thumbs">
                   {activeImages.map((image, index) => (
                     <button
-                      aria-label={`Show image ${index + 1}`}
+                      aria-label={`${t.works.showImage} ${index + 1}`}
                       aria-pressed={index === activeImageIndex}
                       key={`${image.image}-${index}`}
                       onClick={() => setActiveImageIndex(index)}
@@ -250,7 +266,8 @@ export function WorksGallery({ projects }: { projects: Project[] }) {
               ) : null}
             </div>
           </div>
-        </div>
+        </div>,
+        document.body,
       ) : null}
     </>
   );

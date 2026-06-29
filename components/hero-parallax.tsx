@@ -4,6 +4,7 @@ import { useEffect } from "react";
 import Image from "next/image";
 
 import Floating, { FloatingElement } from "@/components/ui/parallax-floating";
+import { useLanguage } from "@/components/language-provider";
 import { TextRotate } from "@/components/ui/text-rotate";
 
 const heroImages = [
@@ -39,6 +40,8 @@ const heroImages = [
 ];
 
 export function HeroParallax() {
+  const { t } = useLanguage();
+
   useEffect(() => {
     const root = document.documentElement;
     const wordmark = document.querySelector<HTMLElement>(".hero-wordmark");
@@ -124,18 +127,12 @@ export function HeroParallax() {
 
       <div className="hero-statement">
         <p className="technical-label hero-kicker">
-          est. 1987 // hk + china + sg
+          {t.hero.kicker}
         </p>
         <p className="technical-label hero-rotator">
-          specialized environments //
+          {t.hero.rotatorLabel}
           <TextRotate
-            texts={[
-              "Medical centres",
-              "Day procedure centres",
-              "Laboratories",
-              "Dental clinics & centres",
-              "Veterinary hospitals",
-            ]}
+            texts={[...t.hero.rotate]}
             mainClassName="hero-rotate"
             rotationInterval={2600}
             staggerDuration={0.012}
@@ -144,15 +141,11 @@ export function HeroParallax() {
           />
         </p>
         <h1 id="hero-title">
-          <span>the intersection</span>
-          <span>of care, precision,</span>
-          <span>and space.</span>
+          {t.hero.title.map((line) => (
+            <span key={line}>{line}</span>
+          ))}
         </h1>
-        <p className="hero-copy">
-          Hallwicks creates medical, dental, and specialist care interiors
-          across Hong Kong, China, and Singapore. Since 1987, the studio has
-          turned clinical workflow into calm, precise space.
-        </p>
+        <p className="hero-copy">{t.hero.copy}</p>
       </div>
     </section>
   );
