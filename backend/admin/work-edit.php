@@ -24,7 +24,7 @@ $work = [
     'image_url' => '',
     'alt' => '',
     'layout' => 'small',
-    'display_order' => 0,
+    'display_order' => 1,
     'published' => 1,
 ];
 $images = [];
@@ -185,6 +185,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 ':published' => $work['published'],
             ]);
         } else {
+            if ($work['display_order'] <= 0) {
+                $work['display_order'] = 1;
+            }
+
+            db()->prepare('UPDATE featured_works SET display_order = display_order + 1 WHERE display_order >= ?')
+                ->execute([$work['display_order']]);
+
             $stmt = db()->prepare(
                 'INSERT INTO featured_works
                  (title, meta, description, image_url, alt, layout, display_order, published, source)
@@ -254,9 +261,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 </head>
 <body>
   <header class="topbar">
-    <a href="works.php" class="brand">Hallwicks</a>
+    <a href="index.php" class="brand">Hallwicks</a>
     <nav>
+      <a href="index.php">Dashboard</a>
       <a href="works.php">Works</a>
+      <a href="clients.php">Client logos</a>
       <a href="logout.php">Logout</a>
     </nav>
   </header>

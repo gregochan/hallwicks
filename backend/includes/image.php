@@ -2,10 +2,29 @@
 
 require_once __DIR__ . '/config.php';
 
-function ensure_upload_dirs(): void
+function upload_bucket_paths(string $bucket = 'works'): array
 {
     $paths = app_config()['paths'];
-    $dir = $paths['public_upload_dir'];
+
+    if ($bucket === 'clients') {
+        $dir = $paths['client_upload_dir'] ?? dirname(dirname($paths['public_upload_dir'])) . '/clients/public';
+        $url = $paths['client_upload_url'] ?? preg_replace('#/works/public$#', '/clients/public', $paths['public_upload_url']);
+
+        return [
+            'dir' => $dir,
+            'url' => $url ?: '/backend/uploads/clients/public',
+        ];
+    }
+
+    return [
+        'dir' => $paths['public_upload_dir'],
+        'url' => $paths['public_upload_url'],
+    ];
+}
+
+function ensure_upload_dirs(string $bucket = 'works'): void
+{
+    $dir = upload_bucket_paths($bucket)['dir'];
 
     if (!is_dir($dir) && !mkdir($dir, 0755, true)) {
         throw new RuntimeException('Unable to create upload directory.');
@@ -115,14 +134,25 @@ function image_processing_options(array $input): array
 
 function process_featured_work_image(array $file, string $title, array $options = []): string
 {
-    ensure_upload_dirs();
+    return process_public_image($file, $title, $options, 'works', true);
+}
+
+function process_client_logo_image(array $file, string $title, array $options = []): string
+{
+    return process_public_image($file, $title, $options, 'clients', false);
+}
+
+function process_public_image(array $file, string $title, array $options = [], string $bucket = 'works', bool $watermark = true): string
+{
+    ensure_upload_dirs($bucket);
     uploaded_image_is_valid($file);
 
-    $config = app_config();
+    $paths = upload_bucket_paths($bucket);
     $base = slug_part($title) . '-' . bin2hex(random_bytes(6));
-    $publicPath = $config['paths']['public_upload_dir'] . '/' . $base . '.webp';
+    $publicPath = $paths['dir'] . '/' . $base . '.webp';
     $sourcePath = $file['tmp_name'];
     $processing = image_processing_options($options);
+    $processing['watermark'] = $watermark;
 
     if (extension_loaded('imagick')) {
         image_to_webp_with_imagick($sourcePath, $publicPath, $processing);
@@ -134,10 +164,20 @@ function process_featured_work_image(array $file, string $title, array $options 
         throw new RuntimeException('Unable to create WebP image.');
     }
 
-    return rtrim($config['paths']['public_upload_url'], '/') . '/' . basename($publicPath);
+    return rtrim($paths['url'], '/') . '/' . basename($publicPath);
 }
 
 function delete_public_work_image(string $imageUrl): void
+{
+    delete_public_image($imageUrl, 'works');
+}
+
+function delete_public_client_image(string $imageUrl): void
+{
+    delete_public_image($imageUrl, 'clients');
+}
+
+function delete_public_image(string $imageUrl, string $bucket = 'works'): void
 {
     $config = app_config();
     $filename = basename(parse_url($imageUrl, PHP_URL_PATH) ?: '');
@@ -146,7 +186,7 @@ function delete_public_work_image(string $imageUrl): void
         return;
     }
 
-    $path = rtrim($config['paths']['public_upload_dir'], '/') . '/' . $filename;
+    $path = rtrim(upload_bucket_paths($bucket)['dir'], '/') . '/' . $filename;
 
     if (is_file($path)) {
         unlink($path);
@@ -224,11 +264,13 @@ function image_to_webp_with_imagick(string $source, string $destination, array $
         $image->brightnessContrastImage(0, (int) $options['contrast']);
     }
 
-    $draw = new ImagickDraw();
-    $draw->setFillColor(new ImagickPixel('rgba(255,255,255,0.32)'));
-    $draw->setFontSize(max(18, (int) round($image->getImageWidth() / 42)));
-    $draw->setGravity(Imagick::GRAVITY_SOUTHEAST);
-    $image->annotateImage($draw, 34, 26, 0, $config['watermark_text']);
+    if (!empty($options['watermark'])) {
+        $draw = new ImagickDraw();
+        $draw->setFillColor(new ImagickPixel('rgba(255,255,255,0.32)'));
+        $draw->setFontSize(max(18, (int) round($image->getImageWidth() / 42)));
+        $draw->setGravity(Imagick::GRAVITY_SOUTHEAST);
+        $image->annotateImage($draw, 34, 26, 0, $config['watermark_text']);
+    }
     $image->setImageFormat('webp');
     $image->setImageCompressionQuality((int) $config['webp_quality']);
     $image->writeImage($destination);
@@ -299,12 +341,14 @@ function image_to_webp_with_gd(string $source, string $destination, array $optio
         imagefilter($dst, IMG_FILTER_CONTRAST, -1 * (int) $options['contrast']);
     }
 
-    $fontSize = max(4, (int) round($targetWidth / 180));
-    $text = $config['watermark_text'];
-    $color = imagecolorallocatealpha($dst, 255, 255, 255, 76);
-    $textWidth = imagefontwidth($fontSize) * strlen($text);
-    $textHeight = imagefontheight($fontSize);
-    imagestring($dst, $fontSize, $targetWidth - $textWidth - 28, $targetHeight - $textHeight - 24, $text, $color);
+    if (!empty($options['watermark'])) {
+        $fontSize = max(4, (int) round($targetWidth / 180));
+        $text = $config['watermark_text'];
+        $color = imagecolorallocatealpha($dst, 255, 255, 255, 76);
+        $textWidth = imagefontwidth($fontSize) * strlen($text);
+        $textHeight = imagefontheight($fontSize);
+        imagestring($dst, $fontSize, $targetWidth - $textWidth - 28, $targetHeight - $textHeight - 24, $text, $color);
+    }
 
     imagewebp($dst, $destination, (int) $config['webp_quality']);
     imagedestroy($src);

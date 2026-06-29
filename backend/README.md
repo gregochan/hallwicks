@@ -1,7 +1,7 @@
-# Hallwicks PHP/MySQL Featured Works CMS
+# Hallwicks PHP/MySQL CMS
 
 This folder contains a small PHP/MySQL editor and JSON API for the Hallwicks
-Featured Works section.
+Featured Works and Client Logo sections.
 
 ## Upload Layout
 
@@ -9,10 +9,14 @@ Upload the contents of `backend/` to the PHP host so these paths exist:
 
 ```text
 /backend/admin/login.php
+/backend/admin/index.php
 /backend/admin/works.php
+/backend/admin/clients.php
 /backend/api/featured-works.php
+/backend/api/clients.php
 /backend/api/featured-works-create.php
 /backend/uploads/works/public/
+/backend/uploads/clients/public/
 ```
 
 ## Install
@@ -33,6 +37,15 @@ php -r "echo password_hash('your-password', PASSWORD_DEFAULT) . PHP_EOL;"
 
 ```text
 uploads/works/public/
+uploads/clients/public/
+```
+
+9. Optional starter content:
+
+```text
+Import seed-existing-projects.sql
+Import seed-client-logos.sql
+Upload the included uploads/works/public and uploads/clients/public files
 ```
 
 ## Admin Editor
@@ -43,8 +56,12 @@ Open:
 /backend/admin/login.php
 ```
 
-You can add/edit Featured Works, upload images, choose layout, set order, and
-publish/unpublish entries.
+After login, `/backend/admin/index.php` is the dashboard. It links to:
+
+- Featured Works: add/edit projects, upload multiple images, select cover image,
+  choose layout, set order, and publish/unpublish entries.
+- Client Logos: add/edit the logo wall, upload logos, set logo size, set order,
+  and publish/unpublish entries.
 
 ## Gallery Migration
 
@@ -63,6 +80,7 @@ The frontend reads:
 
 ```text
 GET /backend/api/featured-works.php
+GET /backend/api/clients.php
 ```
 
 Response shape:
@@ -84,6 +102,22 @@ Response shape:
 }
 ```
 
+Client logo response shape:
+
+```json
+{
+  "data": [
+    {
+      "id": 1,
+      "name": "Great People",
+      "image": "/backend/uploads/clients/public/great-people.webp",
+      "alt": "Great People logo",
+      "logoSize": "wide"
+    }
+  ]
+}
+```
+
 ## Image Protection Setup
 
 Uploads are processed server-side:
@@ -94,6 +128,7 @@ Uploads are processed server-side:
 - apply subtle `HALLWICKS` watermark
 - optional crop preset, alignment, rotate, brightness, contrast, and saturation
 - serve only `uploads/works/public/*.webp`
+- client logo uploads are also converted to WebP, but not watermarked
 - discard the temporary original upload after conversion
 
 The `.htaccess` files block directory listing on Apache-compatible hosts.

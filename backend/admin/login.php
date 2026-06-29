@@ -9,7 +9,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     if (verify_admin_login(trim($_POST['username'] ?? ''), $_POST['password'] ?? '')) {
         login_admin();
-        header('Location: works.php');
+        header('Location: index.php');
         exit;
     }
 
@@ -17,7 +17,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 }
 
 if (is_admin_logged_in()) {
-    header('Location: works.php');
+    header('Location: index.php');
     exit;
 }
 ?>
@@ -27,12 +27,12 @@ if (is_admin_logged_in()) {
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Hallwicks Admin Login</title>
-  <link rel="stylesheet" href="/backend/admin/styles.css?v=20260628">
+  <link rel="stylesheet" href="/backend/admin/styles.css?v=20260629">
 </head>
 <body class="auth-page">
   <main class="auth-card">
     <h1>Hallwicks</h1>
-    <p>Featured Works editor</p>
+    <p>Content editor for featured works and client logos.</p>
     <?php if ($error): ?><div class="notice error"><?= htmlspecialchars($error) ?></div><?php endif; ?>
     <form method="post">
       <input type="hidden" name="csrf_token" value="<?= htmlspecialchars(csrf_token()) ?>">

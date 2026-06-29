@@ -14,7 +14,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         db()->prepare('UPDATE featured_works SET published = 1 - published WHERE id = ?')->execute([$id]);
     }
 
-    if ($action === 'order' && !empty($_POST['order']) && is_array($_POST['order'])) {
+    if ($action === 'order' && !empty($_POST['sorted_ids']) && is_array($_POST['sorted_ids'])) {
+        $stmt = db()->prepare('UPDATE featured_works SET display_order = ? WHERE id = ?');
+
+        foreach (array_values($_POST['sorted_ids']) as $index => $workId) {
+            $stmt->execute([$index + 1, (int) $workId]);
+        }
+    } elseif ($action === 'order' && !empty($_POST['order']) && is_array($_POST['order'])) {
         $stmt = db()->prepare('UPDATE featured_works SET display_order = ? WHERE id = ?');
 
         foreach ($_POST['order'] as $workId => $order) {
@@ -38,12 +44,15 @@ $works = db()->query(
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Featured Works | Hallwicks Admin</title>
-  <link rel="stylesheet" href="/backend/admin/styles.css?v=20260628">
+  <link rel="stylesheet" href="/backend/admin/styles.css?v=20260629">
+  <script src="/backend/admin/sortable.js?v=20260629" defer></script>
 </head>
 <body>
   <header class="topbar">
-    <a href="works.php" class="brand">Hallwicks</a>
+    <a href="index.php" class="brand">Hallwicks</a>
     <nav>
+      <a href="index.php">Dashboard</a>
+      <a href="clients.php">Client logos</a>
       <a href="work-edit.php">Add work</a>
       <a href="logout.php">Logout</a>
     </nav>
@@ -60,7 +69,7 @@ $works = db()->query(
     <form method="post" class="table-form">
       <input type="hidden" name="csrf_token" value="<?= htmlspecialchars(csrf_token()) ?>">
       <input type="hidden" name="action" value="order">
-      <div class="work-list">
+      <div class="work-list sortable-list" data-sortable-list>
         <?php if (!$works): ?>
           <div class="empty-state">
             <h2>No projects yet</h2>
@@ -69,17 +78,16 @@ $works = db()->query(
           </div>
         <?php endif; ?>
         <?php foreach ($works as $work): ?>
-          <article class="work-row">
+          <article class="work-row sortable-row" draggable="true" data-sortable-row>
+            <input type="hidden" name="sorted_ids[]" value="<?= (int) $work['id'] ?>">
+            <button class="drag-handle" type="button" aria-label="Drag <?= htmlspecialchars($work['title']) ?>">↕</button>
             <img src="<?= htmlspecialchars($work['image_url']) ?>" alt="">
             <div>
               <h2><?= htmlspecialchars($work['title']) ?></h2>
               <p><?= htmlspecialchars($work['meta']) ?></p>
               <small><?= htmlspecialchars($work['layout']) ?> · <?= $work['published'] ? 'Published' : 'Draft' ?> · <?= htmlspecialchars($work['source']) ?></small>
             </div>
-            <label>
-              Order
-              <input type="number" name="order[<?= (int) $work['id'] ?>]" value="<?= (int) $work['display_order'] ?>">
-            </label>
+            <div class="order-badge" data-sortable-position><?= (int) $work['display_order'] ?></div>
             <div class="actions">
               <a href="work-edit.php?id=<?= (int) $work['id'] ?>">Edit</a>
               <button type="submit" formaction="works.php" name="toggle_id" value="<?= (int) $work['id'] ?>" onclick="this.form.elements.action.value='toggle'">

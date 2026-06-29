@@ -1,5 +1,19 @@
 START TRANSACTION;
 
+CREATE TABLE IF NOT EXISTS featured_work_images (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  work_id INT NOT NULL,
+  image_url VARCHAR(500) NOT NULL,
+  alt VARCHAR(255) NOT NULL,
+  display_order INT NOT NULL DEFAULT 0,
+  is_cover TINYINT(1) NOT NULL DEFAULT 0,
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  INDEX idx_featured_work_images_work (work_id, display_order, id),
+  CONSTRAINT fk_featured_work_images_work
+    FOREIGN KEY (work_id) REFERENCES featured_works(id)
+    ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
 DELETE FROM featured_works
 WHERE title IN (
   'Great People Branemark Center',
@@ -24,7 +38,7 @@ VALUES
     '/backend/uploads/works/public/great-people-branemark-center-01.webp',
     'Great People Shanghai dental center interior',
     'large',
-    10,
+    1,
     1,
     'admin'
   );
@@ -43,7 +57,7 @@ VALUES
     '/backend/uploads/works/public/st-george-medical-center-01.webp',
     'Minimal medical reception and corridor with black structural details',
     'tall',
-    20,
+    2,
     1,
     'admin'
   );
@@ -62,7 +76,7 @@ VALUES
     '/backend/uploads/works/public/conch-hospital-01.webp',
     'Conch Hospital dental department interior',
     'square',
-    30,
+    3,
     1,
     'admin'
   );
@@ -80,7 +94,7 @@ VALUES
     '/backend/uploads/works/public/clinic-a-k11-tst-01.webp',
     'Clinic A at K11 dental clinic interior',
     'wide',
-    40,
+    4,
     1,
     'admin'
   );
@@ -99,7 +113,7 @@ VALUES
     '/backend/uploads/works/public/langham-place-orthodontics-01.webp',
     'Langham Place orthodontics centre',
     'tall',
-    50,
+    5,
     1,
     'admin'
   );
@@ -117,7 +131,7 @@ VALUES
     '/backend/uploads/works/public/varios-dental-clinic-01.webp',
     'Varios Dental Clinic interior',
     'small',
-    60,
+    6,
     1,
     'admin'
   );
@@ -135,7 +149,7 @@ VALUES
     '/backend/uploads/works/public/vsh-wanchai-mri-01.webp',
     'VSH Wanchai MRI suite interior',
     'tall',
-    70,
+    7,
     1,
     'admin'
   );
@@ -153,7 +167,7 @@ VALUES
     '/backend/uploads/works/public/monnis-restaurant-01.webp',
     'Monnis Restaurant interior',
     'tall',
-    80,
+    8,
     1,
     'admin'
   );
@@ -171,7 +185,7 @@ VALUES
     '/backend/uploads/works/public/private-residence-01.webp',
     'Private residence interior',
     'small',
-    90,
+    9,
     1,
     'admin'
   );

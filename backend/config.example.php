@@ -22,6 +22,8 @@ return [
     'paths' => [
         'public_upload_dir' => __DIR__ . '/uploads/works/public',
         'public_upload_url' => '/backend/uploads/works/public',
+        'client_upload_dir' => __DIR__ . '/uploads/clients/public',
+        'client_upload_url' => '/backend/uploads/clients/public',
     ],
     'images' => [
         'max_upload_bytes' => 12 * 1024 * 1024,
