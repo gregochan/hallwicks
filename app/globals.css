@@ -1348,6 +1348,8 @@ textarea {
 }
 
 .project-lightbox-media img {
+  width: 100%;
+  height: 100%;
   object-fit: contain;
 }
 
@@ -1431,6 +1433,8 @@ textarea {
 }
 
 .project-lightbox-thumbs img {
+  width: 100%;
+  height: 100%;
   object-fit: cover;
 }
 
