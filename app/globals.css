@@ -1949,8 +1949,8 @@ textarea {
   }
 
   .project-grid {
-    grid-template-columns: minmax(0, 1fr);
-    gap: 52px;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 28px 12px;
   }
 
   .project-image-wrap img {
@@ -1962,11 +1962,28 @@ textarea {
   .project-card-square .project-image-wrap,
   .project-card-wide .project-image-wrap,
   .project-card-small .project-image-wrap {
-    aspect-ratio: 4 / 3;
+    aspect-ratio: 1 / 1;
   }
 
   .project-image-motion {
-    inset: -4%;
+    position: relative;
+    inset: auto;
+    height: 100%;
+  }
+
+  .project-meta {
+    gap: 8px;
+    margin-top: 10px;
+  }
+
+  .project-meta h3 {
+    font-size: clamp(22px, 8vw, 32px);
+  }
+
+  .project-meta .technical-label {
+    max-width: none;
+    font-size: 11px;
+    line-height: 1.25;
   }
 
   .project-meta .technical-label {

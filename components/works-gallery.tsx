@@ -46,8 +46,9 @@ function ProjectCard({
     if (!card || !image) return undefined;
 
     const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const compactViewport = window.matchMedia("(max-width: 640px)").matches;
 
-    if (reduceMotion) return undefined;
+    if (reduceMotion || compactViewport) return undefined;
 
     registerGsapPlugins();
 
@@ -112,10 +113,13 @@ function ProjectCard({
           <img
             src={project.image}
             alt={project.alt}
+            decoding="async"
             draggable={false}
-            loading="lazy"
+            fetchPriority={index < 2 ? "high" : "auto"}
+            loading={index < 4 ? "eager" : "lazy"}
             onContextMenu={blockImageMenu}
             onDragStart={blockImageMenu}
+            sizes="(max-width: 640px) 48vw, (max-width: 980px) 92vw, 40vw"
           />
         </div>
       </div>
@@ -222,16 +226,24 @@ export function WorksGallery({ projects }: { projects: Project[] }) {
     setActiveImageIndex(0);
   };
 
+  const selectFilter = (filter: string) => {
+    setActiveFilter(filter);
+    closeProject();
+
+    if (window.matchMedia("(max-width: 640px)").matches) {
+      window.requestAnimationFrame(() => {
+        document.getElementById("works")?.scrollIntoView({ block: "start", behavior: "smooth" });
+      });
+    }
+  };
+
   return (
     <>
       {filters.length ? (
         <div className="project-filters" aria-label={t.works.filtersLabel}>
           <button
             aria-pressed={activeFilter === "all"}
-            onClick={() => {
-              setActiveFilter("all");
-              closeProject();
-            }}
+            onClick={() => selectFilter("all")}
             type="button"
           >
             {t.works.all}
@@ -240,10 +252,7 @@ export function WorksGallery({ projects }: { projects: Project[] }) {
             <button
               aria-pressed={activeFilter.toLowerCase() === filter.toLowerCase()}
               key={filter}
-              onClick={() => {
-                setActiveFilter(filter);
-                closeProject();
-              }}
+              onClick={() => selectFilter(filter)}
               type="button"
             >
               {filter}
