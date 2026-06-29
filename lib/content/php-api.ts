@@ -1,6 +1,9 @@
 import { fallbackSiteContent } from "@/lib/content/fallback";
 import type { Client, Project, SiteContent } from "@/lib/content/types";
 
+const DEFAULT_FEATURED_WORKS_API_URL = "https://hallwicks.com/backend/api/featured-works.php";
+const DEFAULT_CLIENTS_API_URL = "https://hallwicks.com/backend/api/clients.php";
+
 type FeaturedWorksResponse = {
   data?: PhpFeaturedWork[];
 };
@@ -31,7 +34,7 @@ type PhpClient = {
 };
 
 function getApiUrl() {
-  return process.env.HALLWICKS_API_URL?.trim() || "";
+  return process.env.HALLWICKS_API_URL?.trim() || DEFAULT_FEATURED_WORKS_API_URL;
 }
 
 function getClientsApiUrl() {
@@ -39,7 +42,7 @@ function getClientsApiUrl() {
   if (explicit) return explicit;
 
   const featuredWorksUrl = getApiUrl();
-  if (!featuredWorksUrl) return "";
+  if (featuredWorksUrl === DEFAULT_FEATURED_WORKS_API_URL) return DEFAULT_CLIENTS_API_URL;
 
   return featuredWorksUrl.replace(/featured-works\.php(?:\?.*)?$/, "clients.php");
 }
@@ -148,15 +151,14 @@ async function getClients() {
 }
 
 export async function getSiteContent(): Promise<SiteContent> {
-  try {
-    const [projects, clients] = await Promise.all([getFeaturedWorks(), getClients()]);
+  const [projects, clients] = await Promise.all([
+    getFeaturedWorks().catch(() => null),
+    getClients().catch(() => null),
+  ]);
 
-    return {
-      ...fallbackSiteContent,
-      clients: clients ?? fallbackSiteContent.clients,
-      projects: projects ?? fallbackSiteContent.projects,
-    };
-  } catch {
-    return fallbackSiteContent;
-  }
+  return {
+    ...fallbackSiteContent,
+    clients: clients ?? fallbackSiteContent.clients,
+    projects: projects ?? fallbackSiteContent.projects,
+  };
 }
