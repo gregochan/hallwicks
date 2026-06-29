@@ -65,6 +65,7 @@ export function SiteHeader() {
           height={408}
           priority
           src="/images/brand/hallwicks-mark.png"
+          unoptimized
           width={404}
         />
       </header>
@@ -112,6 +113,7 @@ export function SiteHeader() {
           draggable={false}
           height={408}
           src="/images/brand/hallwicks-mark.png"
+          unoptimized
           width={404}
         />
       </div>

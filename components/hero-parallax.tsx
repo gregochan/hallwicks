@@ -114,6 +114,7 @@ export function HeroParallax() {
                 onDragStart={(event) => event.preventDefault()}
                 priority={image.priority}
                 sizes={image.sizes}
+                unoptimized
               />
             </figure>
           </FloatingElement>

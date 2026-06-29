@@ -117,6 +117,7 @@ function ProjectCard({
             onContextMenu={blockImageMenu}
             onDragStart={blockImageMenu}
             sizes="(max-width: 980px) 100vw, 66vw"
+            unoptimized
           />
         </div>
       </div>
@@ -224,6 +225,7 @@ export function WorksGallery({ projects }: { projects: Project[] }) {
                 onContextMenu={blockImageMenu}
                 onDragStart={blockImageMenu}
                 sizes="100vw"
+                unoptimized
               />
             </div>
             <div className="project-lightbox-meta">
@@ -259,7 +261,7 @@ export function WorksGallery({ projects }: { projects: Project[] }) {
                       onClick={() => setActiveImageIndex(index)}
                       type="button"
                     >
-                      <Image src={image.image} alt="" fill sizes="96px" />
+                      <Image src={image.image} alt="" fill sizes="96px" unoptimized />
                     </button>
                   ))}
                 </div>
