@@ -41,6 +41,7 @@ export type SiteContent = {
   clients: Client[];
   settings?: {
     logoColumns?: number;
+    logoMobileColumns?: number;
   };
   projects: Project[];
 };

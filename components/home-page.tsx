@@ -224,7 +224,11 @@ function HomePageContent({ content }: { content: SiteContent }) {
             <div aria-hidden="true" />
             <h2 id="client-title">{t.clients.title}</h2>
           </div>
-          <ClientLogoGrid clients={content.clients} columns={content.settings?.logoColumns} />
+          <ClientLogoGrid
+            clients={content.clients}
+            columns={content.settings?.logoColumns}
+            mobileColumns={content.settings?.logoMobileColumns}
+          />
         </RevealSection>
 
         <RevealSection className="works-section" id="works" aria-labelledby="works-title">

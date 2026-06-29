@@ -9,12 +9,15 @@ import type { Client } from "@/lib/content/types";
 export function ClientLogoGrid({
   clients,
   columns = 5,
+  mobileColumns = 2,
 }: {
   clients: Client[];
   columns?: number;
+  mobileColumns?: number;
 }) {
   const gridRef = useRef<HTMLDivElement | null>(null);
-  const safeColumns = Math.max(2, Math.min(6, Math.round(columns)));
+  const safeColumns = Math.max(2, Math.min(8, Math.round(columns)));
+  const safeMobileColumns = Math.max(1, Math.min(4, Math.round(mobileColumns)));
 
   useEffect(() => {
     const grid = gridRef.current;
@@ -52,7 +55,12 @@ export function ClientLogoGrid({
       className="client-logo-grid"
       aria-label="Selected Hallwicks clients"
       ref={gridRef}
-      style={{ "--client-logo-columns": safeColumns } as CSSProperties}
+      style={
+        {
+          "--client-logo-columns": safeColumns,
+          "--client-logo-mobile-columns": safeMobileColumns,
+        } as CSSProperties
+      }
     >
       {clients.map((client, index) => (
         <div

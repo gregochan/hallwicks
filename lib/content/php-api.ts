@@ -12,6 +12,7 @@ type ClientsResponse = {
   data?: PhpClient[];
   settings?: {
     logoColumns?: number | string | null;
+    logoMobileColumns?: number | string | null;
   };
 };
 
@@ -169,11 +170,13 @@ async function getClients() {
   if (!clients?.length) return null;
 
   const logoColumns = Number(payload.settings?.logoColumns || 5);
+  const logoMobileColumns = Number(payload.settings?.logoMobileColumns || 2);
 
   return {
     clients,
     settings: {
-      logoColumns: Number.isFinite(logoColumns) ? Math.max(2, Math.min(6, logoColumns)) : 5,
+      logoColumns: Number.isFinite(logoColumns) ? Math.max(2, Math.min(8, logoColumns)) : 5,
+      logoMobileColumns: Number.isFinite(logoMobileColumns) ? Math.max(1, Math.min(4, logoMobileColumns)) : 2,
     },
   };
 }

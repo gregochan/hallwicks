@@ -136,6 +136,7 @@ export const fallbackSiteContent: SiteContent = {
   ],
   settings: {
     logoColumns: 5,
+    logoMobileColumns: 2,
   },
   projects: [
     {

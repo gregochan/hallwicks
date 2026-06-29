@@ -134,6 +134,7 @@ export function WorksGallery({ projects }: { projects: Project[] }) {
   const [activeImageIndex, setActiveImageIndex] = useState(0);
   const [mounted, setMounted] = useState(false);
   const filters = useMemo(() => {
+    const priority = ["hong kong", "dental"];
     const seen = new Set<string>();
     const values: string[] = [];
 
@@ -149,7 +150,19 @@ export function WorksGallery({ projects }: { projects: Project[] }) {
       });
     });
 
-    return values;
+    return values.sort((first, second) => {
+      const firstPriority = priority.indexOf(first.toLowerCase());
+      const secondPriority = priority.indexOf(second.toLowerCase());
+
+      if (firstPriority !== -1 || secondPriority !== -1) {
+        const firstRank = firstPriority === -1 ? Number.MAX_SAFE_INTEGER : firstPriority;
+        const secondRank = secondPriority === -1 ? Number.MAX_SAFE_INTEGER : secondPriority;
+
+        return firstRank - secondRank;
+      }
+
+      return 0;
+    });
   }, [projects]);
   const visibleProjects = useMemo(() => {
     if (activeFilter === "all") return projects;
