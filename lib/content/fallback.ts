@@ -134,6 +134,9 @@ export const fallbackSiteContent: SiteContent = {
       logoSize: "wide",
     },
   ],
+  settings: {
+    logoColumns: 5,
+  },
   projects: [
     {
       title: "Great People Branemark Center",
@@ -141,6 +144,7 @@ export const fallbackSiteContent: SiteContent = {
       image: "/images/projects/great-people-shanghai-02.png",
       alt: "Great People Shanghai dental center interior",
       className: "project-card project-card-large",
+      tags: ["China", "Dental"],
     },
     {
       title: "St. George Medical Center",
@@ -148,6 +152,7 @@ export const fallbackSiteContent: SiteContent = {
       image: "/images/projects/st-george-01.png",
       alt: "Minimal medical reception and corridor with black structural details",
       className: "project-card project-card-tall",
+      tags: ["Hong Kong", "Medical"],
     },
     {
       title: "Conch Hospital",
@@ -155,6 +160,7 @@ export const fallbackSiteContent: SiteContent = {
       image: "/images/projects/conch-hospital.png",
       alt: "Conch Hospital dental department interior",
       className: "project-card project-card-square",
+      tags: ["China", "Dental"],
     },
     {
       title: "Clinic A K11 TST",
@@ -162,6 +168,7 @@ export const fallbackSiteContent: SiteContent = {
       image: "/images/projects/clinic-a.png",
       alt: "Clinic A at K11 dental clinic interior",
       className: "project-card project-card-wide",
+      tags: ["Hong Kong", "Dental"],
     },
     {
       title: "Clinic A Dental Section",
@@ -169,6 +176,7 @@ export const fallbackSiteContent: SiteContent = {
       image: "/images/projects/clinic-a-03.png",
       alt: "Clinic A dental section detail",
       className: "project-card project-card-small",
+      tags: ["Hong Kong", "Dental"],
     },
     {
       title: "Langham Place Orthodontics",
@@ -176,6 +184,7 @@ export const fallbackSiteContent: SiteContent = {
       image: "/images/projects/langham-place.png",
       alt: "Langham Place orthodontics centre",
       className: "project-card project-card-tall",
+      tags: ["Hong Kong", "Dental"],
     },
     {
       title: "Varios Dental Clinic",
@@ -183,6 +192,7 @@ export const fallbackSiteContent: SiteContent = {
       image: "/images/projects/varios-dental.png",
       alt: "Varios Dental Clinic interior",
       className: "project-card project-card-small",
+      tags: ["Hong Kong", "Dental"],
     },
     {
       title: "VSH Wanchai MRI",
@@ -190,6 +200,7 @@ export const fallbackSiteContent: SiteContent = {
       image: "/images/projects/vsh-mri.png",
       alt: "VSH Wanchai MRI suite interior",
       className: "project-card project-card-tall",
+      tags: ["Hong Kong", "Vet"],
     },
     {
       title: "Monnis Restaurant",
@@ -197,6 +208,7 @@ export const fallbackSiteContent: SiteContent = {
       image: "/images/projects/monnis-restaurant.png",
       alt: "Monnis Restaurant interior",
       className: "project-card project-card-tall",
+      tags: ["Mongolia", "Hospitality"],
     },
     {
       title: "Private Residence",
@@ -204,6 +216,7 @@ export const fallbackSiteContent: SiteContent = {
       image: "/images/projects/residential.png",
       alt: "Private residence interior",
       className: "project-card project-card-small",
+      tags: ["Residential"],
     },
   ],
 };

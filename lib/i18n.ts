@@ -63,6 +63,8 @@ export const dictionary = {
     works: {
       label: "05 // Selected works",
       title: "Featured works.",
+      all: "All",
+      filtersLabel: "Filter selected works",
       viewGallery: "View gallery",
       openGallery: "Open gallery for",
       closeGallery: "Close",
@@ -141,6 +143,8 @@ export const dictionary = {
     works: {
       label: "05 // 精選作品",
       title: "代表項目",
+      all: "全部",
+      filtersLabel: "篩選精選作品",
       viewGallery: "查看相簿",
       openGallery: "開啟相簿：",
       closeGallery: "關閉",
@@ -233,6 +237,15 @@ export function localizeEnvironment(item: Environment, language: Language): Envi
 
 export function localizeProject(project: Project, language: Language): Project {
   if (language === "en") return project;
+
+  if (project.titleZh || project.metaZh || project.descriptionZh) {
+    return {
+      ...project,
+      description: project.descriptionZh || project.description,
+      meta: project.metaZh || project.meta,
+      title: project.titleZh || project.title,
+    };
+  }
 
   const copy: Record<string, Pick<Project, "title" | "meta">> = {
     "Great People Branemark Center": {

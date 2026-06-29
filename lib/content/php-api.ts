@@ -10,12 +10,16 @@ type FeaturedWorksResponse = {
 
 type ClientsResponse = {
   data?: PhpClient[];
+  settings?: {
+    logoColumns?: number | string | null;
+  };
 };
 
 type PhpFeaturedWork = {
   alt?: string | null;
   className?: string | null;
   description?: string | null;
+  descriptionZh?: string | null;
   image?: string | null;
   images?: {
     alt?: string | null;
@@ -23,7 +27,10 @@ type PhpFeaturedWork = {
   }[] | null;
   layout?: string | null;
   meta?: string | null;
+  metaZh?: string | null;
+  tags?: string[] | string | null;
   title?: string | null;
+  titleZh?: string | null;
 };
 
 type PhpClient = {
@@ -69,6 +76,14 @@ function normalizeFeaturedWork(work: PhpFeaturedWork): Project | null {
   if (!work.title || !work.meta || !work.image || !work.alt) return null;
 
   const layout = work.layout || "small";
+  const tags = Array.isArray(work.tags)
+    ? work.tags
+    : typeof work.tags === "string"
+      ? work.tags.split(",")
+      : [];
+  const normalizedTags = tags
+    .map((tag) => tag.trim())
+    .filter(Boolean);
   const images = work.images
     ?.map((image) => {
       if (!image.image) return null;
@@ -84,10 +99,14 @@ function normalizeFeaturedWork(work: PhpFeaturedWork): Project | null {
     alt: work.alt,
     className: work.className || `project-card project-card-${layout}`,
     description: work.description || undefined,
+    descriptionZh: work.descriptionZh || undefined,
     image: resolveAssetUrl(work.image),
     images: images?.length ? images : undefined,
     meta: work.meta,
+    metaZh: work.metaZh || undefined,
+    tags: normalizedTags.length ? normalizedTags : undefined,
     title: work.title,
+    titleZh: work.titleZh || undefined,
   };
 }
 
@@ -147,7 +166,16 @@ async function getClients() {
     ?.map((client) => normalizeClient(client, apiUrl))
     .filter((client): client is Client => Boolean(client));
 
-  return clients?.length ? clients : null;
+  if (!clients?.length) return null;
+
+  const logoColumns = Number(payload.settings?.logoColumns || 5);
+
+  return {
+    clients,
+    settings: {
+      logoColumns: Number.isFinite(logoColumns) ? Math.max(2, Math.min(6, logoColumns)) : 5,
+    },
+  };
 }
 
 export async function getSiteContent(): Promise<SiteContent> {
@@ -158,7 +186,11 @@ export async function getSiteContent(): Promise<SiteContent> {
 
   return {
     ...fallbackSiteContent,
-    clients: clients ?? fallbackSiteContent.clients,
+    clients: clients?.clients ?? fallbackSiteContent.clients,
     projects: projects ?? fallbackSiteContent.projects,
+    settings: {
+      ...fallbackSiteContent.settings,
+      ...clients?.settings,
+    },
   };
 }

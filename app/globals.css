@@ -1100,7 +1100,7 @@ textarea {
 
 .client-logo-grid {
   display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
+  grid-template-columns: repeat(var(--client-logo-columns, 5), minmax(0, 1fr));
   border-top: 1px solid var(--ink);
   border-left: 1px solid var(--ink);
 }
@@ -1190,6 +1190,36 @@ textarea {
 .text-trigger {
   padding: 12px 15px;
   border: 1px solid var(--ink);
+}
+
+.project-filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: clamp(28px, 4vw, 52px);
+}
+
+.project-filters button {
+  min-height: 36px;
+  padding: 8px 13px;
+  border: 1px solid var(--ink);
+  background: transparent;
+  color: var(--ink);
+  cursor: pointer;
+  font-family: var(--body);
+  font-size: 13px;
+  font-weight: 700;
+  transition:
+    background 160ms ease,
+    color 160ms ease,
+    border-color 160ms ease;
+}
+
+.project-filters button:hover,
+.project-filters button[aria-pressed="true"] {
+  border-color: var(--green);
+  background: var(--green);
+  color: var(--ink);
 }
 
 .project-grid {

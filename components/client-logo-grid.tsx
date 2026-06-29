@@ -6,8 +6,15 @@ import { useEffect, useRef, type CSSProperties } from "react";
 import { gsap, registerGsapPlugins } from "@/lib/animation/gsap";
 import type { Client } from "@/lib/content/types";
 
-export function ClientLogoGrid({ clients }: { clients: Client[] }) {
+export function ClientLogoGrid({
+  clients,
+  columns = 5,
+}: {
+  clients: Client[];
+  columns?: number;
+}) {
   const gridRef = useRef<HTMLDivElement | null>(null);
+  const safeColumns = Math.max(2, Math.min(6, Math.round(columns)));
 
   useEffect(() => {
     const grid = gridRef.current;
@@ -41,7 +48,12 @@ export function ClientLogoGrid({ clients }: { clients: Client[] }) {
   }, []);
 
   return (
-    <div className="client-logo-grid" aria-label="Selected Hallwicks clients" ref={gridRef}>
+    <div
+      className="client-logo-grid"
+      aria-label="Selected Hallwicks clients"
+      ref={gridRef}
+      style={{ "--client-logo-columns": safeColumns } as CSSProperties}
+    >
       {clients.map((client, index) => (
         <div
           className={`client-logo${client.logoSize ? ` client-logo-${client.logoSize}` : ""}`}

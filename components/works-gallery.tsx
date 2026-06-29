@@ -13,6 +13,7 @@ type Project = {
   alt: string;
   className: string;
   description?: string;
+  tags?: string[];
   images?: {
     alt: string;
     image: string;
@@ -128,10 +129,36 @@ function ProjectCard({
 
 export function WorksGallery({ projects }: { projects: Project[] }) {
   const { t } = useLanguage();
+  const [activeFilter, setActiveFilter] = useState("all");
   const [activeProjectIndex, setActiveProjectIndex] = useState<number | null>(null);
   const [activeImageIndex, setActiveImageIndex] = useState(0);
   const [mounted, setMounted] = useState(false);
-  const activeProject = activeProjectIndex === null ? null : projects[activeProjectIndex];
+  const filters = useMemo(() => {
+    const seen = new Set<string>();
+    const values: string[] = [];
+
+    projects.forEach((project) => {
+      project.tags?.forEach((tag) => {
+        const normalized = tag.trim();
+        const key = normalized.toLowerCase();
+
+        if (!normalized || seen.has(key)) return;
+
+        seen.add(key);
+        values.push(normalized);
+      });
+    });
+
+    return values;
+  }, [projects]);
+  const visibleProjects = useMemo(() => {
+    if (activeFilter === "all") return projects;
+
+    return projects.filter((project) =>
+      project.tags?.some((tag) => tag.toLowerCase() === activeFilter.toLowerCase()),
+    );
+  }, [activeFilter, projects]);
+  const activeProject = activeProjectIndex === null ? null : visibleProjects[activeProjectIndex];
   const activeImages = useMemo(() => {
     if (!activeProject) return [];
 
@@ -184,8 +211,35 @@ export function WorksGallery({ projects }: { projects: Project[] }) {
 
   return (
     <>
+      {filters.length ? (
+        <div className="project-filters" aria-label={t.works.filtersLabel}>
+          <button
+            aria-pressed={activeFilter === "all"}
+            onClick={() => {
+              setActiveFilter("all");
+              closeProject();
+            }}
+            type="button"
+          >
+            {t.works.all}
+          </button>
+          {filters.map((filter) => (
+            <button
+              aria-pressed={activeFilter.toLowerCase() === filter.toLowerCase()}
+              key={filter}
+              onClick={() => {
+                setActiveFilter(filter);
+                closeProject();
+              }}
+              type="button"
+            >
+              {filter}
+            </button>
+          ))}
+        </div>
+      ) : null}
       <div className="project-grid">
-        {projects.map((project, index) => (
+        {visibleProjects.map((project, index) => (
           <ProjectCard
             index={index}
             key={project.title}

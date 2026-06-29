@@ -13,11 +13,15 @@ export type Environment = {
 
 export type Project = {
   title: string;
+  titleZh?: string;
   meta: string;
+  metaZh?: string;
   image: string;
   alt: string;
   className: string;
   description?: string;
+  descriptionZh?: string;
+  tags?: string[];
   images?: {
     alt: string;
     image: string;
@@ -35,5 +39,8 @@ export type SiteContent = {
   capabilities: Capability[];
   environments: Environment[];
   clients: Client[];
+  settings?: {
+    logoColumns?: number;
+  };
   projects: Project[];
 };
